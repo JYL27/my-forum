@@ -1,6 +1,6 @@
 import React from "react"
 import { Button, Toolbar, AppBar, TextField, IconButton } from "@mui/material"
-// import PostAddIcon from '@mui/icons-material/PostAdd';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 // style
 function NavBar() {
     return (
@@ -11,7 +11,9 @@ function NavBar() {
                            placeholder="Search for posts"
                            size="small">
                 </TextField>
-                <IconButton aria-label="Create New Post" size="large" href="/post"></IconButton>
+                <IconButton aria-label="Create New Post" size="large" href="/post">
+                    <PostAddIcon></PostAddIcon>
+                </IconButton>
                 <Button variant="outlined" color="inherit">Login</Button>
             </Toolbar>
         </AppBar>

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import getToken from "../components/getToken"
 // style
 function NewPost() {
     const navigate = useNavigate()
@@ -27,7 +28,7 @@ function NewPost() {
         fetch(url, {
           method: "POST",
           headers: {
-            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+            "X-CSRF-Token": getToken(),
             "Content-Type": "application/json",
           },
           body: JSON.stringify(content)

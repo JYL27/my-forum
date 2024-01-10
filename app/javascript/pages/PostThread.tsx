@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Button } from "@mui/material"
+import getToken from "../components/getToken"
 // style
 // edit
 
@@ -28,7 +29,7 @@ function PostThread() {
       fetch(url, {
         method: "DELETE",
         headers: {
-          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          "X-CSRF-Token": getToken(),
           "Content-Type": "application/json",
         },
       })
