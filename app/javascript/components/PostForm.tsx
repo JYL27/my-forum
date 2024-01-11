@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import getToken from "../components/getToken"
 import { allTags, formProps } from "../types/types"
-import { Button, Box, Container, TextField, Typography, Select, SelectChangeEvent, MenuItem } from "@mui/material"
+import { Button, Box, Container, TextField, Typography, MenuItem } from "@mui/material"
 // confirmation message
 
 function PostForm(props: formProps) {
