@@ -5,7 +5,7 @@ import { Container } from "@mui/material"
 
 function PostList() {
     const navigate = useNavigate()
-    const [posts, setPosts] = useState([{id: -1, title: "", body: ""}])
+    const [posts, setPosts] = useState([{id: -1, title: "", body: "", tag: ""}])
 
     useEffect(() => {
         const url = "/api/v1/posts/index"
@@ -22,7 +22,7 @@ function PostList() {
 
     const allPosts = posts.map((post, index) => 
         <div key={index}>
-            <PostItem id={post.id} title={post.title} body={post.body}/>
+            <PostItem id={post.id} title={post.title} body={post.body} tag={post.tag}/>
         </div>
     )
 

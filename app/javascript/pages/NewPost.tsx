@@ -5,8 +5,9 @@ function NewPost() {
     
     return (
       <PostForm action= "Create" 
-                title={""} 
-                body={""}
+                title= ""
+                body= ""
+                tag= "General"
                 id={-1}/>
     )
 }

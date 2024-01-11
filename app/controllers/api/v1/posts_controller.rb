@@ -34,12 +34,12 @@ class Api::V1::PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    render json: { message: 'Post deleted!' }
+    render json: { message: 'Post deleted!' } #where is the message lol
   end
 
   private
     def post_params
-      params.permit(:title, :body)
+      params.permit(:title, :body, :tag)
     end
 
     def set_post

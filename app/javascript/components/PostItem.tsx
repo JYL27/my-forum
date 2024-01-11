@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, CardContent, Typography, CardActions, Button } from "@mui/material"
+import { Card, CardContent, Chip, Typography, CardActions, Button } from "@mui/material"
 import { postProps } from "../types/types"
 
 function PostItem(props: postProps) {
@@ -14,6 +14,7 @@ function PostItem(props: postProps) {
                     <Typography variant="h4">
                         {props.title}
                     </Typography>
+                    <Chip label={props.tag}/>
                 </CardContent>
                 <CardActions>
                     <Button size="small" href={`/posts/${props.id}`}>Read Post</Button>

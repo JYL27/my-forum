@@ -6,7 +6,7 @@ import getToken from "../components/getToken"
 function PostThread() {
     const params = useParams()
     const navigate = useNavigate()
-    const [post, setPost] = useState({ id: params.id, title: "", body: ""})
+    const [post, setPost] = useState({ id: params.id, title: "", body: "", tag: ""})
 
     useEffect(() => {
         const url = `/api/v1/show/${params.id}`
