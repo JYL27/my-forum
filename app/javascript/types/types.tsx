@@ -1,5 +1,15 @@
 const allTags = ["General", "Sports", "Music", "Art", "Technology", "Relationship", "Politics"]
 
+const allTagsObject = {
+    "General": true,
+    "Sports": true,
+    "Music": true,
+    "Art": true,
+    "Technology": true,
+    "Relationship": true,
+    "Politics": true
+}
+
 type formProps = {
     action: "Create" | "Edit"
     title: string
@@ -15,4 +25,4 @@ type postProps = {
     tag: typeof allTags[number]
 }
 
-export { allTags, formProps, postProps }
+export { allTags, allTagsObject, formProps, postProps }

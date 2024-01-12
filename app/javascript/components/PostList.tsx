@@ -1,13 +1,41 @@
 import React, { useState, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import PostItem  from "./PostItem.tsx"
-import { Container } from "@mui/material"
+import { Container, Button, FormControlLabel, Checkbox, Menu } from "@mui/material"
 import { QueryContext } from "../pages/MainPage"
+import { allTags } from "../types/types.tsx"
 
 function PostList() {
-    const { query, tagFilter } = useContext(QueryContext)
+    const { query, tagFilter, setTagFilter } = useContext(QueryContext)
     const navigate = useNavigate()
     const [posts, setPosts] = useState([{id: -1, title: "", body: "", tag: ""}])
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const open = false;
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    }
+    const handleClose = () => {
+      setAnchorEl(null);
+    }
+
+    function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
+      setTagFilter({...tagFilter, [e.target.name]: e.target.checked})
+  }
+  
+    const allCheckboxes = allTags.map((tag) => <span key={tag}>
+                                                <FormControlLabel 
+                                                            control={
+                                                            <Checkbox
+                                                                name={tag}
+                                                                checked={tagFilter[tag]}
+                                                                onChange={e => handleCheck(e)}/>
+                                                            }
+                                                            label={tag}
+                                                            key={tag}>
+                                                </FormControlLabel>
+                                                    
+                                                </span>)
 
     useEffect(() => {
         const url = "/api/v1/posts/index"
@@ -22,7 +50,7 @@ function PostList() {
           .catch(() => navigate("/"))
     }, [query, tagFilter])
 
-    function queryFilter(post: {title: string, body: string}) {
+    function filterSearch(post: {title: string, body: string, tag: string}) {
       const queryWords = query.split(" ")
 
       function checker(text: string) {
@@ -33,16 +61,24 @@ function PostList() {
         }
         return false
       }
-      return checker(post.title) || checker(post.body)
+      return ( checker(post.title) || checker(post.body) ) && tagFilter[post.tag]
     }
 
-    const allPosts = posts.filter(queryFilter).map((post, index) => 
+    const allPosts = posts.filter(filterSearch).map((post, index) => 
         <div key={index}>
             <PostItem id={post.id} title={post.title} body={post.body} tag={post.tag}/>
         </div>
     )
 
     return <Container>
+                <Button variant="outlined" color="inherit" onClick={handleClick}>Filter posts</Button>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                >
+                    {allCheckboxes}
+                </Menu>
         {allPosts}
     </Container>
 } 
