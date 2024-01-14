@@ -11,7 +11,7 @@ function PostItem(props: postProps) {
                                   boxShadow: 1}
                                   }>
                 <CardContent sx={{paddingBottom: 1}}>
-                    <Typography variant="h4">
+                    <Typography noWrap variant="h4">
                         {props.title}
                     </Typography>
                     <Chip label={props.tag}/>

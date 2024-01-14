@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { Button } from "@mui/material"
+import { Button, Typography, Container, Stack, Tooltip, IconButton, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
 import getToken from "../components/getToken"
+import CommentList from "../components/CommentList"
+import CommentIcon from '@mui/icons-material/Comment'
+import CommentForm from "../components/CommentForm"
 
 function PostThread() {
     const params = useParams()
@@ -41,11 +44,16 @@ function PostThread() {
         .catch((error) => console.log(error.message))
     }
 
-    return <div>
-        <section>
-          <h1>{post.title}</h1>
-          <p>{post.body}</p>
-        </section>
+    return <Container>
+      <Stack>
+        <Typography variant="h3">
+          {post.title}
+        </Typography>
+        <Typography fontSize={15}>
+          {post.body}
+        </Typography>
+      </Stack>
+      <Stack direction="row">
         <Button onClick={deletePost}>Delete Post</Button>
         <Link to="edit" state= {{...post}}>
         Edit Post
@@ -53,7 +61,24 @@ function PostThread() {
         <Link to="/posts" className="btn btn-link mt-3">
           Back to posts
         </Link>
-      </div>
+        <Tooltip title="Add a comment" placement="bottom">
+            <IconButton size="large" href="/comments/new">
+                <CommentIcon />
+            </IconButton>
+        </Tooltip>
+      </Stack>
+      <CommentList />
+      <Accordion>
+        <AccordionSummary>
+          <Typography fontSize={12}>
+            Add a Comment
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <CommentForm id={-1} postId={params.id} commenter="" body="" />
+        </AccordionDetails>
+      </Accordion>
+    </Container>
 }
 
 export default PostThread

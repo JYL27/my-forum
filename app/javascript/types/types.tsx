@@ -25,4 +25,11 @@ type postProps = {
     tag: typeof allTags[number]
 }
 
-export { allTags, allTagsObject, formProps, postProps }
+type commentProps = {
+    id: number
+    postId: string | undefined
+    commenter: string
+    body: string
+}
+
+export { allTags, allTagsObject, formProps, postProps, commentProps }
