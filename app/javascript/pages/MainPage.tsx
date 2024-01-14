@@ -1,7 +1,7 @@
-import React, {createContext, useState} from "react"
+import React, { useContext, createContext, useState } from "react"
 import NavBar from "../components/NavBar"
 import PostList from "../components/PostList"
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import { allTagsObject } from "../types/types"
 
 // default for set functions
@@ -20,12 +20,16 @@ function MainPage() {
             </QueryContext.Provider>
         )
     }
+
+
+   
+
     return <Box>
         <QueryContextProvider>
             <NavBar />
             <PostList />
         </QueryContextProvider>
-        </Box>
+    </Box>
 }
 
 export default MainPage

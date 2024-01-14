@@ -30,7 +30,7 @@ function NavBar() {
                     </Tooltip>
                 </form>
                 <Tooltip title="Create New Post" placement="bottom">
-                    <IconButton size="large" href="/new-post">
+                    <IconButton size="large" href="/new">
                         <PostAddIcon />
                     </IconButton>
                 </Tooltip>

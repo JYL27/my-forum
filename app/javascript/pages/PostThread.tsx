@@ -9,7 +9,7 @@ function PostThread() {
     const [post, setPost] = useState({ id: params.id, title: "", body: "", tag: ""})
 
     useEffect(() => {
-        const url = `/api/v1/show/${params.id}`
+        const url = `/api/v1/posts/${params.id}`
         fetch(url)
           .then((res) => {
             if (res.ok) {
@@ -22,7 +22,7 @@ function PostThread() {
     }, [params.id])
 
     function deletePost() {
-      const url = `/api/v1/destroy/${params.id}`
+      const url = `/api/v1/posts/${params.id}`
   
       fetch(url, {
         method: "DELETE",
@@ -47,7 +47,7 @@ function PostThread() {
           <p>{post.body}</p>
         </section>
         <Button onClick={deletePost}>Delete Post</Button>
-        <Link to="/edit" state= {{...post}}>
+        <Link to="edit" state= {{...post}}>
         Edit Post
         </Link>
         <Link to="/posts" className="btn btn-link mt-3">

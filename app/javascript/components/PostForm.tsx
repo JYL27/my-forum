@@ -28,7 +28,7 @@ function PostForm(props: formProps) {
         setBodyError(false)
         setTagError(false)
 
-        const url = props.action == "Create" ? "/api/v1/posts/create" : `/api/v1/posts/${props.id}`
+        const url = props.action == "Create" ? "/api/v1/posts" : `/api/v1/posts/${props.id}`
 
         if (title.length == 0 || body.length == 0 || tag.length == 0) {
             if(title.length == 0) {
@@ -57,15 +57,15 @@ function PostForm(props: formProps) {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(content)
-          })
-            .then((res) => {
-              if (res.ok) {
+        })
+        .then((res) => {
+            if (res.ok) {
                 return res.json()
-              }
-              throw new Error("Network response was not ok.")
-            })
-            .then((res) => navigate(`/posts/${res.id}`))
-            .catch((error) => console.log(error.message))
+            }
+            throw new Error("Network response was not ok.")
+        })
+        .then((res) => navigate(`/posts/${res.id}`))
+        .catch((error) => console.log(error.message))
     }
 
     return (

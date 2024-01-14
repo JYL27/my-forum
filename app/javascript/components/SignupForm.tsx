@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom"
 import { Button, Typography, TextField, Container } from "@mui/material"
 import getToken from "../components/getToken"
 
-function LoginForm() {
+function SignupForm() {
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [emailError, setEmailError] = useState(false)
+    const [usernameError, setUsernameError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
-
+    const [passwordConfirmationError, setPasswordConfirmationError] = useState(false)
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setFunction: Function) {
         setFunction(e.target.value)
@@ -18,34 +21,44 @@ function LoginForm() {
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
         setEmailError(false)
+        setUsernameError(false)
         setPasswordError(false)
+        setPasswordConfirmationError(false)
 
-        const url = "http://localhost:3001/login"
+        const url = "http://localhost:3001/signup"
 
-        if (email.length == 0 || password.length == 0) {
+        if (email.length == 0 || username.length == 0 || password.length == 0 || passwordConfirmation.length == 0) {
             if(email.length == 0) {
                 setEmailError(true)
             } 
+            if(username.length == 0) {
+                setUsernameError(true)
+            }
 
             if(password.length == 0) {
                 setPasswordError(true)
             }
             
+            if(passwordConfirmation.length == 0) {
+                setPasswordConfirmationError(true)
+            }
             return;
         }
 
         const content = {
             email,
-            password
+            name: username,
+            password,
+            passwordConfirmation
         }
 
         fetch(url, {
             method: "POST",
             mode: "cors",
             headers: {
-            "X-CSRF-Token": getToken(),
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin":"*"
+              "X-CSRF-Token": getToken(),
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin":"*"
             },
             body: JSON.stringify(content)
         })
@@ -61,7 +74,7 @@ function LoginForm() {
 
     return <Container>
         <Typography variant="h4">
-            Login!
+            Sign Up!
         </Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <TextField
@@ -74,6 +87,15 @@ function LoginForm() {
                 error={emailError}>
             </TextField>
             <TextField
+                onChange={(e) => handleChange(e, setUsername)}
+                label="Username"
+                value={username}
+                variant="outlined"
+                margin="dense"
+                required
+                error={usernameError}>
+            </TextField>
+            <TextField
                 onChange={(e) => handleChange(e, setPassword)}
                 label="Password"
                 value={password}
@@ -82,12 +104,20 @@ function LoginForm() {
                 required
                 error={passwordError}>
             </TextField>
-            <Button type="submit" href="/posts" variant="outlined">
-                Login
+            <TextField
+                onChange={(e) => handleChange(e, setPasswordConfirmation)}
+                label="Password Confirmation"
+                value={passwordConfirmation}
+                variant="outlined"
+                margin="dense"
+                required
+                error={passwordConfirmationError}>
+            </TextField>
+            <Button type="submit" variant="outlined">
+                Signup
             </Button>
         </form>
     </Container>
 }
 
-
-export default LoginForm
+export default SignupForm

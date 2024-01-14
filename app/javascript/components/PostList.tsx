@@ -10,13 +10,13 @@ function PostList() {
     const navigate = useNavigate()
     const [posts, setPosts] = useState([{id: -1, title: "", body: "", tag: ""}])
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-    const open = false;
+    const open = Boolean(anchorEl)
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(e.currentTarget)
     }
     const handleClose = () => {
-      setAnchorEl(null);
+      setAnchorEl(null)
     }
 
     function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
@@ -38,7 +38,7 @@ function PostList() {
                                                 </span>)
 
     useEffect(() => {
-        const url = "/api/v1/posts/index"
+        const url = "/api/v1/posts"
         fetch(url)
           .then((res) => {
             if (res.ok) {

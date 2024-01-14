@@ -8,9 +8,3 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-3.times do |i| 
-    Post.create(
-        title: "Hello World #{i}",
-        body: "This is post number #{i}"
-    )
-end

@@ -1,16 +1,24 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get 'posts/index'
-      post 'posts/create'
-      get 'show/:id', to: 'posts#show'
-      get 'posts/edit'
-      patch 'posts/:id', to: 'posts#update'
-      delete 'destroy/:id', to: 'posts#destroy'
-    end
+      resources :posts do
+        resources :comments
+      end
+    end 
   end
-  
-  get '/*path' => 'homepage#index'
+
+  devise_for :users, path: '', path_names: {
+    sign_in: 'login',
+    sign_out: 'logout',
+    registration: 'signup'
+  },
+  controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+
+  get '/*path' => 'static#home' 
+  root "static#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -18,5 +26,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "homepage#index"
+  # root "homepage#index" PROBABLY CAN DELETE
 end
