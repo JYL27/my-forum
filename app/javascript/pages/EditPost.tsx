@@ -1,22 +1,29 @@
-import React from "react"
-import { useLocation } from "react-router-dom"
-import PostForm from "../components/PostForm"
+import React, { useEffect, useState } from "react"
+import PostForm from "../components/posts/PostForm"
+import { postProps } from "../types/types"
+import { useNavigate, useParams } from "react-router-dom"
 
 
 function EditPost() {
-    const location = useLocation()
-    const title = location.state.title
-    const body = location.state.body
-    const tag = location.state.tag
-    const id = location.state.id
-    
+    const params = useParams()
+    const navigate = useNavigate()
+    const [post, setPost] = useState<postProps>({id: -1, title: " ", body: " ", tag: "General"})
+
+    useEffect(() => {
+        const url = `/api/v1/posts/${params.id}`
+        fetch(url)
+          .then((res) => {
+            if (res.ok) {
+              return res.json()
+            }
+            throw new Error("The post does not exist.")
+          })
+          .then((data) => setPost(data))
+          .catch(() => navigate("/posts"))
+    }, [params.id])
+
     return (
-        <PostForm action= "Edit" 
-                  title={title} 
-                  body={body}
-                  tag={tag}
-                  id={id}
-        />
+        <PostForm {...post} action="Edit"/>
     )
 }
 

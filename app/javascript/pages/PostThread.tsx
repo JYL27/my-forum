@@ -1,18 +1,30 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, createContext } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { Button, Typography, Container, Stack, Tooltip, IconButton, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
-import getToken from "../components/getToken"
-import CommentList from "../components/CommentList"
+import { Box, Button, Typography, Container, Stack, Tooltip, IconButton, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
+import CommentList from "../components/comments/CommentList"
 import CommentIcon from '@mui/icons-material/Comment'
-import CommentForm from "../components/CommentForm"
+import CommentForm from "../components/comments/CommentForm"
+import PostDisplay from "../components/posts/PostDisplay"
+import { postProps } from "../types/types"
+
+export const PostContext = createContext({
+  setAction: (_: "Add" | "Edit") => {},
+  setOpen: (_: boolean) => {}
+})
+
+type postParams = {
+  postId: string
+}
 
 function PostThread() {
-    const params = useParams()
+    const { postId } = useParams<keyof postParams>() as postParams
     const navigate = useNavigate()
-    const [post, setPost] = useState({ id: params.id, title: "", body: "", tag: ""})
+    const [post, setPost] = useState<postProps>()
+    const [open, setOpen] = useState(false)
+    const [action, setAction] = useState<"Add" | "Edit">("Add")
 
     useEffect(() => {
-        const url = `/api/v1/posts/${params.id}`
+        const url = `/api/v1/posts/${postId}`
         fetch(url)
           .then((res) => {
             if (res.ok) {
@@ -22,58 +34,21 @@ function PostThread() {
           })
           .then((data) => setPost(data))
           .catch(() => navigate("/posts"))
-    }, [params.id])
+    }, [postId])
 
-    function deletePost() {
-      const url = `/api/v1/posts/${params.id}`
-  
-      fetch(url, {
-        method: "DELETE",
-        headers: {
-          "X-CSRF-Token": getToken(),
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json()
-          }
-          throw new Error("The post does not exist.")
-        })
-        .then(() => navigate("/posts"))
-        .catch((error) => console.log(error.message))
-    }
-
-    return <Container>
-      <Stack>
-        <Typography variant="h3">
-          {post.title}
-        </Typography>
-        <Typography fontSize={15}>
-          {post.body}
-        </Typography>
-      </Stack>
-      <Stack direction="row">
-        <Button onClick={deletePost}>Delete Post</Button>
-        <Link to="edit" state= {{...post}}>
-        Edit Post
-        </Link>
-        <Link to="/posts" className="btn btn-link mt-3">
-          Back to posts
-        </Link>
-      </Stack>
-      <CommentList postId={params.id}/>
-      <Accordion>
-        <AccordionSummary expandIcon={<CommentIcon />}>
-          <Typography fontSize={12}>
-            Add a Comment
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <CommentForm id={-1} postId={params.id} commenter="" body="" />
-        </AccordionDetails>
-      </Accordion>
-    </Container>
+    return <PostContext.Provider value={{setAction, setOpen}}>
+      <Box>
+        <PostDisplay />
+          <CommentList postId={parseInt(postId)}/>
+        <Accordion expanded={open}>
+          <AccordionSummary>
+          </AccordionSummary>
+          <AccordionDetails>
+            <CommentForm action={action} id={5} postId={parseInt(postId)} commenter="" body="" parentId={undefined}/>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
+    </PostContext.Provider>
 }
 
 export default PostThread

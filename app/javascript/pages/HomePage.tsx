@@ -2,6 +2,7 @@ import React from "react"
 import LoginForm from "../components/LoginForm"
 import SignupForm from "../components/SignupForm"
 import { Stack, Divider, Container, Typography } from "@mui/material"
+// authentication not working at all (cors issue)
 
 function HomePage() {
     return (<Container>

@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Button, Card, CardContent, CardActions, Typography } from "@mui/material"
-import { commentProps } from "../types/types"
-import getToken from "./getToken"
+import { commentProps } from "../../types/types"
+import getToken from "../getToken"
+import { PostContext } from "../../pages/PostThread"
 
 function CommentItem(props: commentProps) {
+    const { setAction, setOpen } = useContext(PostContext)
     
     function deleteComment() {
         const url = `/api/v1/posts/${props.postId}/comments/${props.id}`
@@ -25,6 +27,13 @@ function CommentItem(props: commentProps) {
         .catch((error) => console.log(error.message))
     }
 
+    function editComment() {
+
+    }
+
+    function replyToComment() {
+
+    }
     return <Card variant="outlined" sx={{border: 1, 
                                   margin: 1, 
                                   maxHeight: 200, 
@@ -42,6 +51,8 @@ function CommentItem(props: commentProps) {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={deleteComment}>Delete Comment</Button>
+                    <Button size="small" onClick={() => {setAction("Edit"); setOpen(true)}}>Edit Comment</Button>
+                    <Button size="small" onClick={replyToComment}>Reply</Button>
                 </CardActions>
             </Card>
 }

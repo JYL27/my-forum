@@ -1,14 +1,16 @@
-import React, { useContext, createContext, useState } from "react"
+import React, { createContext, useState } from "react"
 import NavBar from "../components/NavBar"
-import PostList from "../components/PostList"
-import { Box, Button } from "@mui/material"
+import PostList from "../components/posts/PostList"
+import { Box } from "@mui/material"
 import { allTagsObject } from "../types/types"
 
-// default for set functions
-const def1: React.Dispatch<React.SetStateAction<string>> = (i) => i
-const def2: any = i => i
-
-export const QueryContext = createContext({ query: "", setQuery: def1 , tagFilter: allTagsObject, setTagFilter: def2})
+export const QueryContext = createContext({query: "", 
+                                            setQuery: (_: string) => {} , 
+                                            tagFilter: allTagsObject, 
+                                            setTagFilter: (_: typeof allTagsObject) => {}
+                                            }) /* sets query context. NavBar component receives and sets
+                                                 the query via search field. PostList component containing the filter button
+                                                 receives and sets tag filters via a checkbox menu.*/
 
 function MainPage() {
     const QueryContextProvider = ({ children }) => {
@@ -20,9 +22,6 @@ function MainPage() {
             </QueryContext.Provider>
         )
     }
-
-
-   
 
     return <Box>
         <QueryContextProvider>

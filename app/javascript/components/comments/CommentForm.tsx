@@ -1,11 +1,9 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import getToken from "../components/getToken"
-import { commentProps } from "../types/types"
+import getToken from "../getToken"
+import { commentFormProps } from "../../types/types"
 import { Button, Box, Container, TextField, Typography } from "@mui/material"
 
-function CommentForm(props: commentProps) {
-    const navigate = useNavigate()
+function CommentForm(props: commentFormProps) {
     const [commenter, setCommenter] = useState(props.commenter)
     const [body, setBody] = useState(props.body)
     const [commenterError, setCommenterError] = useState(false)
@@ -20,7 +18,9 @@ function CommentForm(props: commentProps) {
         setCommenterError(false)
         setBodyError(false)
 
-        const url = `/api/v1/posts/${props.postId}/comments`
+        const url = props.action == "Add" 
+                                ? `/api/v1/posts/${props.postId}/comments` 
+                                : `/api/v1/posts/${props.postId}/comments/${props.id}`
 
         if (commenter.length == 0 || body.length == 0) {
             if(commenter.length == 0) {
@@ -38,7 +38,7 @@ function CommentForm(props: commentProps) {
         }
 
         fetch(url, {
-            method: "POST",
+            method: props.action == "Add" ? "POST" : "PATCH",
             headers: {
               "X-CSRF-Token": getToken(),
               "Content-Type": "application/json",
@@ -59,7 +59,7 @@ function CommentForm(props: commentProps) {
         <Box margin={2}>
             <Container>
                 <Typography variant="h3">
-                    Add a comment
+                    {props.action == "Add" ? "Add a comment" : "Edit your comment"}
                 </Typography>
                 <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <TextField 
@@ -83,7 +83,7 @@ function CommentForm(props: commentProps) {
                         error={bodyError}/>
                     <Button
                         type="submit">
-                        Add Comment
+                        {props.action} Comment
                     </Button>
                     <Button href="/posts">
                         Back to Posts
