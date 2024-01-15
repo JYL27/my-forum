@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from "react"
 import CommentItem  from "./CommentItem.tsx"
 import { Container, Typography, Stack } from "@mui/material"
 
-function CommentList() {
-    const [comments, setComments] = useState([{id: -1, commenter: "", body: ""}])
+function CommentList(props: {postId: string | undefined}) {
+    const [comments, setComments] = useState([{id: -1, postId: props.postId, commenter: "", body: ""}])
     useEffect(() => {
-        const url = "/api/v1/comments"
+        const url = `/api/v1/posts/${props.postId}/comments`
         fetch(url)
           .then((res) => {
             if (res.ok) {
@@ -19,7 +19,7 @@ function CommentList() {
 
     const allComments = comments.map((comment, index) => 
         <div key={index}>
-            <CommentItem id={comment.id} commenter={comment.commenter} body={comment.body}/>
+            <CommentItem id={comment.id} postId={props.postId} commenter={comment.commenter} body={comment.body}/>
         </div>
     )
     return <Container>

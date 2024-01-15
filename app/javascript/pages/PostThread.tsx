@@ -61,15 +61,10 @@ function PostThread() {
         <Link to="/posts" className="btn btn-link mt-3">
           Back to posts
         </Link>
-        <Tooltip title="Add a comment" placement="bottom">
-            <IconButton size="large" href="/comments/new">
-                <CommentIcon />
-            </IconButton>
-        </Tooltip>
       </Stack>
-      <CommentList />
+      <CommentList postId={params.id}/>
       <Accordion>
-        <AccordionSummary>
+        <AccordionSummary expandIcon={<CommentIcon />}>
           <Typography fontSize={12}>
             Add a Comment
           </Typography>

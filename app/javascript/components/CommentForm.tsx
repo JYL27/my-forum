@@ -51,7 +51,7 @@ function CommentForm(props: commentProps) {
             }
             throw new Error("Network response was not ok.")
         })
-        .then((res) => navigate(`/posts/${props.postId}`))
+        .then(() => window.location.reload())
         .catch((error) => console.log(error.message))
     }
 
