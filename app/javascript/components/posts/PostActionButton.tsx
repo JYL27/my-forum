@@ -1,9 +1,11 @@
-import React from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import React, { useContext } from "react"
+import { useNavigate, useParams, useLocation } from "react-router-dom"
 import { MenuItem } from "@mui/material"
 import getToken from "../../components/getToken"
+import { PostContext } from "../../pages/PostThread"
 
 function PostActionButton(props: {action: string}) {
+    const post = useContext(PostContext)
     const params = useParams()
     const navigate = useNavigate()
 
@@ -29,7 +31,7 @@ function PostActionButton(props: {action: string}) {
     }
 
     function handleEdit() {
-        navigate("edit")
+      navigate("edit", {state: {...post}})
     }
 
     return (

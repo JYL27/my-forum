@@ -1,30 +1,35 @@
 import React, { useState, useEffect, createContext } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { Box, Button, Typography, Container, Stack, Tooltip, IconButton, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
+import { useNavigate, useParams } from "react-router-dom"
+import { Box, Button } from "@mui/material"
 import CommentList from "../components/comments/CommentList"
-import CommentIcon from '@mui/icons-material/Comment'
-import CommentForm from "../components/comments/CommentForm"
 import PostDisplay from "../components/posts/PostDisplay"
 import { postProps } from "../types/types"
 
 export const PostContext = createContext({
-  setAction: (_: "Add" | "Edit") => {},
-  setOpen: (_: boolean) => {}
-})
+                                          id: -1,
+                                          title: " ",
+                                          body: " ",
+                                          tag: "General"
+                                          }
+                                        )
 
 type postParams = {
-  postId: string
+  id: string
 }
 
 function PostThread() {
-    const { postId } = useParams<keyof postParams>() as postParams
+    const { id } = useParams<keyof postParams>()
     const navigate = useNavigate()
-    const [post, setPost] = useState<postProps>()
-    const [open, setOpen] = useState(false)
-    const [action, setAction] = useState<"Add" | "Edit">("Add")
+    const [post, setPost] = useState<postProps>({
+                                                  id: -1,
+                                                  title: " ",
+                                                  body: " ",
+                                                  tag: "General"
+                                                  }
+                                                )
 
     useEffect(() => {
-        const url = `/api/v1/posts/${postId}`
+        const url = `/api/v1/posts/${id}`
         fetch(url)
           .then((res) => {
             if (res.ok) {
@@ -34,20 +39,14 @@ function PostThread() {
           })
           .then((data) => setPost(data))
           .catch(() => navigate("/posts"))
-    }, [postId])
+    }, [id])
 
-    return <PostContext.Provider value={{setAction, setOpen}}>
+    return <PostContext.Provider value={post}>
       <Box>
         <PostDisplay />
-          <CommentList postId={parseInt(postId)}/>
-        <Accordion expanded={open}>
-          <AccordionSummary>
-          </AccordionSummary>
-          <AccordionDetails>
-            <CommentForm action={action} id={5} postId={parseInt(postId)} commenter="" body="" parentId={undefined}/>
-          </AccordionDetails>
-        </Accordion>
+        <CommentList />
       </Box>
+      <Button href="/posts">Back to Posts</Button>
     </PostContext.Provider>
 }
 

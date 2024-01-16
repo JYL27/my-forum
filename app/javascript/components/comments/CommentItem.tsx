@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
-import { Button, Card, CardContent, CardActions, Typography } from "@mui/material"
+import React, { useState } from "react"
+import { Button, Card, CardContent, CardActions, Typography, Backdrop } from "@mui/material"
 import { commentProps } from "../../types/types"
 import getToken from "../getToken"
-import { PostContext } from "../../pages/PostThread"
+import CommentForm from "./CommentForm"
 
 function CommentItem(props: commentProps) {
-    const { setAction, setOpen } = useContext(PostContext)
+    const [open, setOpen] = useState<boolean>(false)
     
     function deleteComment() {
         const url = `/api/v1/posts/${props.postId}/comments/${props.id}`
@@ -27,13 +27,14 @@ function CommentItem(props: commentProps) {
         .catch((error) => console.log(error.message))
     }
 
-    function editComment() {
-
+    function handleOpen() {
+        setOpen(true)
     }
 
     function replyToComment() {
 
     }
+
     return <Card variant="outlined" sx={{border: 1, 
                                   margin: 1, 
                                   maxHeight: 200, 
@@ -51,7 +52,12 @@ function CommentItem(props: commentProps) {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={deleteComment}>Delete Comment</Button>
-                    <Button size="small" onClick={() => {setAction("Edit"); setOpen(true)}}>Edit Comment</Button>
+                    <Button size="small" onClick={handleOpen}>Edit Comment</Button>
+                    <Backdrop open={open}>
+                        <CommentForm {...props} 
+                                    action="Edit"
+                        />
+                    </Backdrop>
                     <Button size="small" onClick={replyToComment}>Reply</Button>
                 </CardActions>
             </Card>

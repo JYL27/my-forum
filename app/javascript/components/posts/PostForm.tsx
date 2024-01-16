@@ -1,22 +1,20 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import getToken from "../../components/getToken"
 import { allTags, postFormProps } from "../../types/types"
 import { Button, Box, Container, TextField, Typography, MenuItem } from "@mui/material"
 // try to implement confirmation message
 // initial value not setting properly
-function PostForm(props: postFormProps) {
+function PostForm(props: {action: "Create" | "Edit"}) {
     const navigate = useNavigate()
+    const { state } = useLocation()
     // state variables for each element in the post object excluding id, and whether an error should be displayed on submit
-    const [title, setTitle] = useState(props.title)
-    const [body, setBody] = useState(props.body)
-    const [tag, setTag] = useState(props.tag)
+    const [title, setTitle] = useState(state.title)
+    const [body, setBody] = useState(state.body)
+    const [tag, setTag] = useState(state.tag)
     const [titleError, setTitleError] = useState(false)
     const [bodyError, setBodyError] = useState(false)
     const [tagError, setTagError] = useState(false)
-
-    console.log(props.title)
-    console.log(title)
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setFunction: Function) {
         setFunction(e.target.value) // sets the respective element variable on change of text field
@@ -33,7 +31,7 @@ function PostForm(props: postFormProps) {
         setTagError(false)
         
         // checks if user wishes to create a new post or edit an existing post. URL changes accordingly
-        const url = props.action == "Create" ? "/api/v1/posts" : `/api/v1/posts/${props.id}`
+        const url = props.action == "Create" ? "/api/v1/posts" : `/api/v1/posts/${state.id}`
 
         if (title.length == 0 || body.length == 0 || tag.length == 0) {
             // if any fields are blank, don't process form submission. 

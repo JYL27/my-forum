@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import CommentItem  from "./CommentItem.tsx"
 import { Container, Typography, Stack } from "@mui/material"
 import { commentProps } from "../../types/types.tsx"
+import { PostContext } from "../../pages/PostThread.tsx"
 // type comment object
 
-function CommentList(props: {postId: number}) {
+function CommentList() {
+    const post = useContext(PostContext)
     const [comments, setComments] = useState<Array<commentProps>>([{id: -1, 
-                                                                    postId: props.postId, 
                                                                     commenter: "", 
                                                                     body: "", 
+                                                                    postId: post.id,
                                                                     parentId: undefined}])
     
     useEffect(() => {
-        const url = `/api/v1/posts/${props.postId}/comments`
+        const url = `/api/v1/posts/${post.id}/comments`
         fetch(url)
           .then((res) => {
             if (res.ok) {
@@ -25,7 +27,7 @@ function CommentList(props: {postId: number}) {
     }, [])
 
     function filterComments(comment: any) {
-        return comment.post_id.toString() == props.postId
+        return comment.post_id == post.id
     }
 
     const allComments = comments.filter(filterComments)

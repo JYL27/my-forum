@@ -1,37 +1,33 @@
-import React, { useState, useEffect } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { Button, Typography, Container, IconButton, Menu } from "@mui/material"
-import getToken from "../../components/getToken"
+import React, { useState, useContext } from "react"
+import { Typography, Container, IconButton, Tooltip, Menu, MenuItem, Backdrop } from "@mui/material"
 import PostActionButton from "./PostActionButton"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import CommentForm from "../comments/CommentForm"
+import CommentIcon from '@mui/icons-material/Comment'
+import { PostContext } from "../../pages/PostThread"
 
 function PostDisplay() {
-    const params = useParams()
-    const navigate = useNavigate()
-    const [post, setPost] = useState({ id: params.id, title: "", body: "", tag: ""})
+    const post = useContext(PostContext)
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const [openForm, setOpenForm] = useState<boolean>(false)
+    const openMenu = Boolean(anchorEl)
+
 
     function handleClick(event: React.MouseEvent<HTMLElement>) {
-      setAnchorEl(event.currentTarget);
+      setAnchorEl(event.currentTarget)
     }
 
-    function handleClose() {
-      setAnchorEl(null);
+    function handleCloseMenu() {
+      setAnchorEl(null)
     }
 
-    useEffect(() => {
-        const url = `/api/v1/posts/${params.id}`
-        fetch(url)
-          .then((res) => {
-            if (res.ok) {
-              return res.json()
-            }
-            throw new Error("The post does not exist.")
-          })
-          .then((data) => setPost(data))
-          .catch(() => navigate("/posts"))
-    }, [params.id])
+    function handleCloseForm(){
+      setOpenForm(false)
+    }
+
+    function handleOpenForm() {
+      setOpenForm(true)
+    }
 
     return (
         <Container>
@@ -46,12 +42,26 @@ function PostDisplay() {
             </IconButton>
             <Menu
                 anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
+                open={openMenu}
+                onClose={handleCloseMenu}
             >
-                <PostActionButton action="Edit"/>
-                <PostActionButton action="Delete"/>
+              <PostActionButton action="Edit"/>
+              <PostActionButton action="Delete"/>
             </Menu>
+            <Tooltip title="Add a Comment" placement="bottom">
+              <IconButton size="large" onClick={handleOpenForm}>
+                <CommentIcon />
+              </IconButton>
+            </Tooltip>
+              <Backdrop open={openForm}>
+                <CommentForm id={-1} 
+                            commenter="" 
+                            body="" 
+                            postId={post.id} 
+                            parentId={undefined} 
+                            action="Add"
+                />
+              </Backdrop>
         </Container>
     )
 }
