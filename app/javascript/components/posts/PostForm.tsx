@@ -4,7 +4,7 @@ import getToken from "../../components/getToken"
 import { allTags, postFormProps } from "../../types/types"
 import { Button, Box, Container, TextField, Typography, MenuItem } from "@mui/material"
 // try to implement confirmation message
-// initial value not setting properly
+
 function PostForm(props: {action: "Create" | "Edit"}) {
     const navigate = useNavigate()
     const { state } = useLocation()

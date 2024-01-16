@@ -6,6 +6,11 @@ class Api::V1::CommentsController < ApplicationController
     render json: comment
   end
 
+  def new
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.new(parent_id: params[:parent_id])
+  end
+  
   def create
     post = Post.find(params[:post_id])
     comment = post.comments.create!(comment_params)
@@ -40,7 +45,7 @@ class Api::V1::CommentsController < ApplicationController
   
   private
     def comment_params
-        params.require(:comment).permit(:commenter, :body)
+        params.require(:comment).permit(:commenter, :body, :parent_id)
     end
 
     def set_comment

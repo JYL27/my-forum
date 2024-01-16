@@ -1,11 +1,13 @@
 import React, { useState } from "react"
 import getToken from "../getToken"
-import { commentFormProps } from "../../types/types"
 import { Button, Box, Container, TextField, Typography } from "@mui/material"
+import { useLocation, useNavigate } from "react-router-dom"
 
-function CommentForm(props: commentFormProps) {
-    const [commenter, setCommenter] = useState(props.commenter)
-    const [body, setBody] = useState(props.body)
+function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
+    const navigate = useNavigate()
+    const { state } = useLocation()
+    const [commenter, setCommenter] = useState(state.commenter)
+    const [body, setBody] = useState(state.body)
     const [commenterError, setCommenterError] = useState(false)
     const [bodyError, setBodyError] = useState(false)
 
@@ -18,9 +20,9 @@ function CommentForm(props: commentFormProps) {
         setCommenterError(false)
         setBodyError(false)
 
-        const url = props.action == "Add" 
-                                ? `/api/v1/posts/${props.postId}/comments` 
-                                : `/api/v1/posts/${props.postId}/comments/${props.id}`
+        const url = props.action == ("Add" || "Reply")
+                                ? `/api/v1/posts/${state.post_id}/comments` 
+                                : `/api/v1/posts/${state.post_id}/comments/${state.id}`
 
         if (commenter.length == 0 || body.length == 0) {
             if(commenter.length == 0) {
@@ -34,11 +36,12 @@ function CommentForm(props: commentFormProps) {
 
         const content = {
             commenter,
-            body
+            body,
+            parent_id: state.parent_id
         }
 
         fetch(url, {
-            method: props.action == "Add" ? "POST" : "PATCH",
+            method: props.action == ("Add" || "Reply") ? "POST" : "PATCH",
             headers: {
               "X-CSRF-Token": getToken(),
               "Content-Type": "application/json",
@@ -51,7 +54,7 @@ function CommentForm(props: commentFormProps) {
             }
             throw new Error("Network response was not ok.")
         })
-        .then(() => window.location.reload())
+        .then(() => navigate(`/posts/${state.post_id}`))
         .catch((error) => console.log(error.message))
     }
 
@@ -59,10 +62,15 @@ function CommentForm(props: commentFormProps) {
         <Box margin={2}>
             <Container>
                 <Typography variant="h3">
-                    {props.action == "Add" ? "Add a comment" : "Edit your comment"}
+                    {props.action == "Add" 
+                                ? "Add a comment" 
+                                : props.action == "Edit"
+                                ? "Edit your comment"
+                                : "Add a Reply"}
                 </Typography>
                 <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <TextField 
+                        color="primary"
                         onChange={(e) => handleChange(e, setCommenter)}
                         label="Commenter name"
                         value={commenter}
@@ -71,6 +79,7 @@ function CommentForm(props: commentFormProps) {
                         required
                         error={commenterError}/>
                     <TextField 
+                        color="primary"
                         onChange={(e) => handleChange(e, setBody)}
                         label="Comment Body"
                         value={body}
@@ -83,7 +92,11 @@ function CommentForm(props: commentFormProps) {
                         error={bodyError}/>
                     <Button
                         type="submit">
-                        {props.action} Comment
+                        {props.action == "Add"
+                                    ? "Add Comment"
+                                    : props.action == "Edit"
+                                    ? "Edit Comment"
+                                    : "Reply"} 
                     </Button>
                     <Button href="/posts">
                         Back to Posts

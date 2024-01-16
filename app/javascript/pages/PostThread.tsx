@@ -5,13 +5,14 @@ import CommentList from "../components/comments/CommentList"
 import PostDisplay from "../components/posts/PostDisplay"
 import { postProps } from "../types/types"
 
-export const PostContext = createContext({
-                                          id: -1,
-                                          title: " ",
-                                          body: " ",
-                                          tag: "General"
-                                          }
-                                        )
+export const PostContext = createContext(
+  {
+    id: -1,
+    title: " ",
+    body: " ",
+    tag: "General"
+  }
+)
 
 type postParams = {
   id: string
@@ -20,13 +21,22 @@ type postParams = {
 function PostThread() {
     const { id } = useParams<keyof postParams>()
     const navigate = useNavigate()
-    const [post, setPost] = useState<postProps>({
-                                                  id: -1,
-                                                  title: " ",
-                                                  body: " ",
-                                                  tag: "General"
-                                                  }
-                                                )
+    const [post, setPost] = useState<postProps>(
+      {
+        id: -2,
+        title: " ",
+        body: " ",
+        tag: "General"
+      }
+    )
+
+    const PostContextProvider = ({ children }) => {
+      return (
+          <PostContext.Provider value={post}>
+              {children}
+          </PostContext.Provider>
+      )
+    }
 
     useEffect(() => {
         const url = `/api/v1/posts/${id}`
@@ -41,13 +51,15 @@ function PostThread() {
           .catch(() => navigate("/posts"))
     }, [id])
 
-    return <PostContext.Provider value={post}>
+    return(
       <Box>
-        <PostDisplay />
-        <CommentList />
+        <PostContextProvider>
+          <PostDisplay />
+          <CommentList />
+        </PostContextProvider>
+        <Button href="/posts">Back to Posts</Button>
       </Box>
-      <Button href="/posts">Back to Posts</Button>
-    </PostContext.Provider>
+    ) 
 }
 
 export default PostThread

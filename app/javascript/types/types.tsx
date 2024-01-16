@@ -21,12 +21,12 @@ type postFormProps = {
 
 // props taken in CommentForm component
 type commentFormProps = {
-    action: "Add" | "Edit"
+    action: "Add" | "Edit" | "Reply"
     id: number
     commenter: string
     body: string
-    postId: number
-    parentId: number | undefined
+    post_id: number
+    parent_id: number | undefined
 }
 // props taken in PostItem component
 type postProps = {
@@ -37,9 +37,9 @@ type postProps = {
 }
 
 const samplePost = {
-    id: -100,
-    title: "",
-    body: "",
+    id: -1,
+    title: " ",
+    body: " ",
     tag: "General"
 }
 
@@ -48,8 +48,8 @@ type commentProps = {
     id: number
     commenter: string
     body: string
-    postId: number
-    parentId: number | undefined
+    post_id: number
+    parent_id: number | undefined
 }
 
 export { allTags, allTagsObject, postFormProps, commentFormProps, postProps, commentProps, samplePost }
