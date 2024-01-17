@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from "react"
-import CommentItem  from "./CommentItem.tsx"
+import CommentBlock  from "./CommentBlock.tsx"
 import { Container, Typography, Stack } from "@mui/material"
 import { commentProps } from "../../types/types.tsx"
 import { PostContext } from "../../pages/PostThread.tsx"
@@ -51,9 +51,9 @@ function CommentList() {
     }
 
     const allComments = comments.filter(filterComments)
-                                .map((comment, index) => 
-                                    <div key={index}>
-                                        <CommentItem {...comment}/>
+                                .map((comment) => 
+                                    <div key={comment.id}>
+                                        <CommentBlock {...comment}/>
                                     </div>    
                                 )
 
@@ -62,7 +62,10 @@ function CommentList() {
             <Stack spacing={1}>
                 {allComments.length !== 0 
                                 ? allComments 
-                                : <Typography fontSize={12}>There are no comments on this post yet!</Typography>}
+                                : <Typography fontSize={12}>
+                                    There are no comments on this post yet!
+                                </Typography>
+                            }
             </Stack>
         </Container>
     </CommentContextProvider>
