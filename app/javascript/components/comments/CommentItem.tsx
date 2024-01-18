@@ -1,12 +1,24 @@
-import React from "react"
-import { Button, Card, CardContent, CardActions, Typography } from "@mui/material"
+import React, { useState } from "react"
+import { Button, Card, CardContent, CardActions, Typography, Menu, IconButton, MenuItem } from "@mui/material"
 import { commentProps } from "../../types/types"
 import getToken from "../getToken"
 import { useNavigate } from "react-router-dom"
-
+import getCookie from "../getCookie"
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 function CommentItem(props: commentProps) {
     const navigate = useNavigate()
+    const user = getCookie("user")
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const openMenu = Boolean(anchorEl)
+
+    function handleClick(event: React.MouseEvent<HTMLElement>) {
+      setAnchorEl(event.currentTarget)
+    }
+
+    function handleCloseMenu() {
+      setAnchorEl(null)
+    }
 
     function deleteComment() {
         const url = `/api/v1/posts/${props.post_id}/comments/${props.id}`
@@ -43,7 +55,6 @@ function CommentItem(props: commentProps) {
                                     })
     }
 
-
     return <Card variant="outlined" sx={
             {   border: 1, 
                 margin: 1, 
@@ -60,12 +71,28 @@ function CommentItem(props: commentProps) {
             <Typography fontSize={12}>
                 {props.body}
             </Typography>
+            <IconButton onClick={handleClick}>
+                <MoreVertIcon />
+            </IconButton>
+            <Menu
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleCloseMenu}
+            >
+              <MenuItem onClick={replyToComment}>
+                Reply to Comment
+              </MenuItem>
+              {user == props.commenter && 
+                <>
+                    <MenuItem onClick={deleteComment}>
+                        Delete Comment
+                    </MenuItem>
+                    <MenuItem onClick={editComment}>
+                        Edit Comment
+                    </MenuItem>
+                </>}
+            </Menu>
         </CardContent>
-        <CardActions>
-            <Button size="small" onClick={deleteComment}>Delete Comment</Button>
-            <Button size="small" onClick={editComment}>Edit Comment</Button>
-            <Button size="small" onClick={replyToComment}>Reply to Comment</Button>
-        </CardActions>
     </Card>
 }
 

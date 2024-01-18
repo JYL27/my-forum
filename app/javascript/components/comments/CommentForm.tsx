@@ -2,37 +2,34 @@ import React, { useState } from "react"
 import getToken from "../getToken"
 import { Button, Box, Container, TextField, Typography } from "@mui/material"
 import { useLocation, useNavigate } from "react-router-dom"
+import getCookie from "../getCookie"
 
 function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
     const navigate = useNavigate()
     const { state } = useLocation()
-    const [commenter, setCommenter] = useState(state.commenter)
     const [body, setBody] = useState(state.body)
-    const [commenterError, setCommenterError] = useState(false)
     const [bodyError, setBodyError] = useState(false)
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setFunction: Function) {
-        setFunction(e.target.value)
+    const commenter = getCookie("user")
+
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        setBody(e.target.value)
     }
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        setCommenterError(false)
         setBodyError(false)
 
         const url = props.action == ("Add" || "Reply")
                                 ? `/api/v1/posts/${state.post_id}/comments` 
                                 : `/api/v1/posts/${state.post_id}/comments/${state.id}`
 
-        if (commenter.length == 0 || body.length == 0) {
-            if(commenter.length == 0) {
-                setCommenterError(true)
-            } 
-            if(body.length == 0) {
-                setBodyError(true)
-            }
-            return;
-        } 
+        if(body.length == 0) {
+            setBodyError(true)
+            return
+        }
+        
+
 
         const content = {
             commenter,
@@ -71,16 +68,7 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
                 <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <TextField 
                         color="primary"
-                        onChange={(e) => handleChange(e, setCommenter)}
-                        label="Commenter name"
-                        value={commenter}
-                        variant="outlined"
-                        margin="dense"
-                        required
-                        error={commenterError}/>
-                    <TextField 
-                        color="primary"
-                        onChange={(e) => handleChange(e, setBody)}
+                        onChange={handleChange}
                         label="Comment Body"
                         value={body}
                         variant="outlined"
@@ -98,8 +86,8 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
                                     ? "Edit Comment"
                                     : "Reply"} 
                     </Button>
-                    <Button href="/posts">
-                        Back to Posts
+                    <Button href={`/posts/${state.post_id}`}>
+                        Back to Post
                     </Button>
                 </form>
             </Container>

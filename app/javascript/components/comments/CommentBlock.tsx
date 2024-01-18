@@ -1,14 +1,11 @@
 import React, { useContext } from "react"
-import { Button, Card, CardContent, CardActions, Typography } from "@mui/material"
 import { commentProps } from "../../types/types"
-import getToken from "../getToken"
-import { useNavigate } from "react-router-dom"
 import { CommentContext } from "./CommentList"
 import CommentItem from "./CommentItem"
 
 function CommentBlock(props: commentProps) {
     const comments = useContext(CommentContext)
-
+    console.log(props)
     function filterComments(comment: commentProps) {
         return comment.parent_id == props.id
     }

@@ -1,62 +1,33 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button, Typography, TextField, Container } from "@mui/material"
-import getToken from "../components/getToken"
+import { useCookies } from "react-cookie"
 
 function LoginForm() {
     const navigate = useNavigate()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [emailError, setEmailError] = useState(false)
-    const [passwordError, setPasswordError] = useState(false)
+    const [cookies, setCookies] = useCookies(["user"])
+    const [username, setUsername] = useState("")
+    const [usernameError, setUsernameError] = useState(false)
 
+    function handleLogin(user: string | object) {
+        setCookies("user", user, { path: "/", sameSite: "strict"})
+        navigate("posts")
+    }
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setFunction: Function) {
-        setFunction(e.target.value)
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        setUsername(e.target.value)
     }
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        setEmailError(false)
-        setPasswordError(false)
+        setUsernameError(false)
 
-        const url = "http://localhost:3001/login"
-
-        if (email.length == 0 || password.length == 0) {
-            if(email.length == 0) {
-                setEmailError(true)
-            } 
-
-            if(password.length == 0) {
-                setPasswordError(true)
-            }
-            
-            return;
+        if(username.length == 0) {
+            setUsernameError(true)
+            return
         }
 
-        const content = {
-            email,
-            password
-        }
-
-        fetch(url, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-            "X-CSRF-Token": getToken(),
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin":"*"
-            },
-            body: JSON.stringify(content)
-        })
-        .then((res) => {
-            if (res.ok) {
-                return res.json()
-            }
-            throw new Error("Network response was not ok.")
-        })
-        .then((res) => navigate("/posts"))
-        .catch((error) => console.log(error.message))
+        handleLogin(username)
     }
 
     return <Container>
@@ -65,24 +36,15 @@ function LoginForm() {
         </Typography>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <TextField
-                onChange={(e) => handleChange(e, setEmail)}
-                label="Email"
-                value={email}
+                onChange={handleChange}
+                label="Username"
+                value={username}
                 variant="outlined"
                 margin="dense"
                 required
-                error={emailError}>
+                error={usernameError}>
             </TextField>
-            <TextField
-                onChange={(e) => handleChange(e, setPassword)}
-                label="Password"
-                value={password}
-                variant="outlined"
-                margin="dense"
-                required
-                error={passwordError}>
-            </TextField>
-            <Button type="submit" href="/posts" variant="outlined">
+            <Button type="submit" variant="outlined">
                 Login
             </Button>
         </form>

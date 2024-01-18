@@ -2,6 +2,7 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@auth-kit/react-router": "^3.0.2-alpha.19",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@hotwired/stimulus": "^3.2.2",
@@ -19,6 +20,8 @@
     "postcss": "^8.4.33",
     "postcss-cli": "^11.0.0",
     "react": "^18.2.0",
+    "react-auth-kit": "^3.0.2-alpha.19",
+    "react-cookie": "^7.0.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "sass": "^1.69.7"

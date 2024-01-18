@@ -4,13 +4,14 @@ import Posts from "../pages/MainPage"
 import PostThread from "../pages/PostThread"
 import NewPost from "../pages/NewPost"
 import EditPost from "../pages/EditPost"
-import HomePage from "../pages/HomePage"
+import LoginPage from "../pages/LoginPage"
 import NewComment from "../pages/NewComment"
 import EditComment from "../pages/EditComment"
+
 export default (
     <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/posts/:id" element={<PostThread />} />
           <Route path="/new" element={<NewPost />} />

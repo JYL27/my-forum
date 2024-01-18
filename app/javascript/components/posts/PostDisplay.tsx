@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react"
 import { Typography, Container, IconButton, Tooltip, Menu, MenuItem, Backdrop } from "@mui/material"
 import PostActionButton from "./PostActionButton"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import CommentForm from "../comments/CommentForm"
 import CommentIcon from '@mui/icons-material/Comment'
 import { PostContext } from "../../pages/PostThread"
 import { useNavigate } from "react-router-dom"

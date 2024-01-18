@@ -3,18 +3,25 @@ import { Button, Toolbar, AppBar, TextField, IconButton, Tooltip } from "@mui/ma
 import PostAddIcon from "@mui/icons-material/PostAdd"
 import SearchIcon from "@mui/icons-material/Search"
 import { QueryContext } from "../pages/MainPage"
-import { Navigate, useNavigate } from "react-router-dom"
-
+import { useNavigate } from "react-router-dom"
+import { useCookies } from "react-cookie"
 
 function NavBar() {
+    const [cookies, removeCookies] = useCookies()
     const { setQuery } = useContext(QueryContext) // retrieves setQuery function via context provider
     const navigate = useNavigate()
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         setQuery(e.target.value)
     } // receives change in text field and sets query variable accordingly
 
     function handleCreate() {
       navigate("/new", {state: {id: -1, title: " ", body: " ", tag: "General"}})
+    }
+
+    function handleLogout() {
+      removeCookies("user", { path: "/", sameSite: "strict"})
+      navigate("/")
     }
 
     return (
@@ -39,7 +46,7 @@ function NavBar() {
               <PostAddIcon />
             </IconButton>
           </Tooltip>
-          <Button variant="outlined" color="inherit">Login</Button>
+          <Button variant="outlined" color="inherit" onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
     )
