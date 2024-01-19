@@ -23,7 +23,7 @@ function PostDisplay() {
     }
 
     function handleAddComment() {
-      navigate("comments/new", {state: {id: -1, 
+      navigate("comments/new", {state: {  id: -1, 
                                           commenter: " ", 
                                           body: " ", 
                                           post_id: post.id, 

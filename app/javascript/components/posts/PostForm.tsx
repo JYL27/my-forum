@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import getToken from "../../components/getToken"
-import { allTags, postFormProps } from "../../types/types"
+import { allTags } from "../../types/types"
 import { Button, Box, Container, TextField, Typography, MenuItem } from "@mui/material"
 import getCookie from "../getCookie"
 // try to implement confirmation message
@@ -124,7 +124,6 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                         {/*displays correct action*/}
                         {props.action} Post
                     </Button>
-                    <Button onClick={() => console.log(typeof poster)}>Test</Button>
                     <Button href="/posts">
                         Back to Posts
                     </Button>

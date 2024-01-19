@@ -9,7 +9,7 @@ let def: number | undefined
 
 export const CommentContext = createContext(
     [
-        {id: -1, 
+        {   id: -1, 
             commenter: " ", 
             body: " ", 
             post_id: -1,
@@ -35,8 +35,6 @@ function CommentList() {
     if(isError) {
         return <span>Error: {error.message}</span>
     }
-
-    console.log(comments)
     
     const CommentContextProvider = ({ children }) => {
         return (

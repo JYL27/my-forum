@@ -15,7 +15,7 @@ class Api::V1::CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create!(comment_params)
 
-    if comment
+    if @comment
       render json: @comment
     else
       render json: @comment.errors

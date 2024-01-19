@@ -4,7 +4,6 @@ import PostItem  from "./PostItem.tsx"
 import { Container, Button, FormControlLabel, Checkbox, Menu } from "@mui/material"
 import { QueryContext } from "../../pages/MainPage.tsx"
 import { allTags } from "../../types/types.tsx"
-import getCookie from "../getCookie.tsx"
 
 function PostList() {
   const { query, tagFilter, setTagFilter } = useContext(QueryContext)
