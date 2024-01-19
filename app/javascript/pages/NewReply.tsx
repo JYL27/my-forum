@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import CommentForm from "../components/comments/CommentForm"
 
 function NewComment() {
+    
     return <CommentForm action="Reply" />
 }
 

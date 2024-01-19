@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import getToken from "../../components/getToken"
 import { allTags, postFormProps } from "../../types/types"
 import { Button, Box, Container, TextField, Typography, MenuItem } from "@mui/material"
+import getCookie from "../getCookie"
 // try to implement confirmation message
 
 function PostForm(props: {action: "Create" | "Edit"}) {
@@ -15,6 +16,8 @@ function PostForm(props: {action: "Create" | "Edit"}) {
     const [titleError, setTitleError] = useState(false)
     const [bodyError, setBodyError] = useState(false)
     const [tagError, setTagError] = useState(false)
+
+    const poster = getCookie("user")
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setFunction: Function) {
         setFunction(e.target.value) // sets the respective element variable on change of text field
@@ -50,6 +53,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
         } 
 
         const content = {
+            poster,
             title,
             body,
             tag
@@ -120,6 +124,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                         {/*displays correct action*/}
                         {props.action} Post
                     </Button>
+                    <Button onClick={() => console.log(typeof poster)}>Test</Button>
                     <Button href="/posts">
                         Back to Posts
                     </Button>

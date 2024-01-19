@@ -4,11 +4,12 @@ import PostItem  from "./PostItem.tsx"
 import { Container, Button, FormControlLabel, Checkbox, Menu } from "@mui/material"
 import { QueryContext } from "../../pages/MainPage.tsx"
 import { allTags } from "../../types/types.tsx"
+import getCookie from "../getCookie.tsx"
 
 function PostList() {
   const { query, tagFilter, setTagFilter } = useContext(QueryContext)
   const navigate = useNavigate()
-  const [posts, setPosts] = useState([{id: -1, title: "", body: "", tag: ""}]) // sets default values, -1 for id as placeholder
+  const [posts, setPosts] = useState([{id: -1, poster: "", title: "", body: "", tag: ""}]) // sets default values, -1 for id as placeholder
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null) // sets display for filter tag menu
   const open = Boolean(anchorEl)
 

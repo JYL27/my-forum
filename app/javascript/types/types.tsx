@@ -30,6 +30,7 @@ type commentFormProps = {
 }
 // props taken in PostItem component
 type postProps = {
+    poster: string
     id: number
     title: string
     body: string
@@ -37,6 +38,7 @@ type postProps = {
 }
 
 const samplePost = {
+    poster: " ",
     id: -1,
     title: " ",
     body: " ",

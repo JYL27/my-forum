@@ -5,7 +5,6 @@ import CommentItem from "./CommentItem"
 
 function CommentBlock(props: commentProps) {
     const comments = useContext(CommentContext)
-    console.log(props)
     function filterComments(comment: commentProps) {
         return comment.parent_id == props.id
     }

@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import { Button, Card, CardContent, CardActions, Typography, Menu, IconButton, MenuItem } from "@mui/material"
+import { Tooltip, Card, CardContent, Typography, Menu, IconButton, MenuItem } from "@mui/material"
 import { commentProps } from "../../types/types"
 import getToken from "../getToken"
 import { useNavigate } from "react-router-dom"
 import getCookie from "../getCookie"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import CommentIcon from '@mui/icons-material/Comment'
 
 function CommentItem(props: commentProps) {
     const navigate = useNavigate()
@@ -71,27 +72,29 @@ function CommentItem(props: commentProps) {
             <Typography fontSize={12}>
                 {props.body}
             </Typography>
-            <IconButton onClick={handleClick}>
-                <MoreVertIcon />
-            </IconButton>
-            <Menu
-                anchorEl={anchorEl}
-                open={openMenu}
-                onClose={handleCloseMenu}
-            >
-              <MenuItem onClick={replyToComment}>
-                Reply to Comment
-              </MenuItem>
+            <Tooltip title="Add a Reply" placement="bottom">
+              <IconButton size="large" onClick={replyToComment}>
+                <CommentIcon />
+              </IconButton>
+            </Tooltip>
               {user == props.commenter && 
-                <>
-                    <MenuItem onClick={deleteComment}>
-                        Delete Comment
-                    </MenuItem>
-                    <MenuItem onClick={editComment}>
-                        Edit Comment
-                    </MenuItem>
-                </>}
-            </Menu>
+                <React.Fragment>
+                    <IconButton onClick={handleClick}>
+                        <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={openMenu}
+                        onClose={handleCloseMenu}
+                    >
+                        <MenuItem onClick={deleteComment}>
+                            Delete Comment
+                        </MenuItem>
+                        <MenuItem onClick={editComment}>
+                            Edit Comment
+                        </MenuItem>
+                    </Menu>
+                </React.Fragment>}
         </CardContent>
     </Card>
 }

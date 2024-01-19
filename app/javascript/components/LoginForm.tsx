@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button, Typography, TextField, Container } from "@mui/material"
 import { useCookies } from "react-cookie"
+import getCookie from "./getCookie"
 
 function LoginForm() {
     const navigate = useNavigate()
@@ -11,7 +12,7 @@ function LoginForm() {
 
     function handleLogin(user: string | object) {
         setCookies("user", user, { path: "/", sameSite: "strict"})
-        navigate("posts")
+        navigate("/posts")
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -48,6 +49,7 @@ function LoginForm() {
                 Login
             </Button>
         </form>
+        <Button onClick={() => console.log(typeof getCookie("user"))} />
     </Container>
 }
 

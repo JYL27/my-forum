@@ -7,6 +7,7 @@ import { postProps } from "../types/types"
 
 export const PostContext = createContext(
   {
+    poster: " ",
     id: -1,
     title: " ",
     body: " ",
@@ -19,10 +20,12 @@ type postParams = {
 }
 
 function PostThread() {
+  
     const { id } = useParams<keyof postParams>()
     const navigate = useNavigate()
     const [post, setPost] = useState<postProps>(
       {
+        poster: " ",
         id: -2,
         title: " ",
         body: " ",
@@ -47,7 +50,7 @@ function PostThread() {
             }
             throw new Error("The post does not exist.")
           })
-          .then((data) => setPost(data))
+          .then((data) => {setPost(data)})
           .catch(() => navigate("/posts"))
     }, [id])
 

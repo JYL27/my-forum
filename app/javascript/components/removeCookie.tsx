@@ -1,12 +1,12 @@
-export default function getCookie(key: string) {
+
+export default function removeCookie(key: string) {
     const cDecoded = decodeURIComponent(document.cookie)
     const cookies = cDecoded.split("; ")
     let result: string | undefined = undefined
 
     cookies.forEach(element => {
         if(element.indexOf(`${key}=`) == 0){
-            result = element.substring(key.length + 1)
+            document.cookie = `${element}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
         }
     })
-    return result
 }

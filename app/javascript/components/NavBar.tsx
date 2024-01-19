@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import { QueryContext } from "../pages/MainPage"
 import { useNavigate } from "react-router-dom"
 import { useCookies } from "react-cookie"
+import removeCookie from "./removeCookie"
 
 function NavBar() {
     const [cookies, removeCookies] = useCookies()
@@ -20,7 +21,7 @@ function NavBar() {
     }
 
     function handleLogout() {
-      removeCookies("user", { path: "/", sameSite: "strict"})
+      removeCookie("user")
       navigate("/")
     }
 

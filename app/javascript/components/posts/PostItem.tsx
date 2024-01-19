@@ -17,6 +17,9 @@ function PostItem(props: postProps) {
             <Typography noWrap variant="h4">
                 {props.title} {/* displays post title*/}
             </Typography>
+            <Typography fontSize={8}>
+                {props.poster}
+            </Typography>
             <Chip label={props.tag}/> {/* displays post tag*/}
         </CardContent>
         <CardActions>
