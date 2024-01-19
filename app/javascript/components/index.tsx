@@ -2,6 +2,9 @@ import React from "react"
 import { createRoot } from "react-dom/client"
 import App from "./App"
 import { CookiesProvider } from "react-cookie"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
 
 document.addEventListener("turbo:load", () => {
 
@@ -10,8 +13,10 @@ document.addEventListener("turbo:load", () => {
   )
 
   root.render(
-    <CookiesProvider>
-      <App />
-    </CookiesProvider>
+    <QueryClientProvider client={queryClient}>
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
+    </QueryClientProvider>
   )
 })

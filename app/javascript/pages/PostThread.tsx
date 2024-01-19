@@ -21,12 +21,12 @@ type postParams = {
 
 function PostThread() {
   
-    const { id } = useParams<keyof postParams>()
+    const { id } = useParams<keyof postParams>() as postParams
     const navigate = useNavigate()
     const [post, setPost] = useState<postProps>(
       {
         poster: " ",
-        id: -2,
+        id: parseInt(id),
         title: " ",
         body: " ",
         tag: "General"
@@ -52,7 +52,7 @@ function PostThread() {
           })
           .then((data) => {setPost(data)})
           .catch(() => navigate("/posts"))
-    }, [id])
+    }, [])
 
     return(
       <Box>

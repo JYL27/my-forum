@@ -2,17 +2,17 @@ class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: %i[show destroy edit update]
 
   def index
-    post = Post.all.order(created_at: :desc)
-    render json: post
+    @post = Post.all.order(created_at: :desc)
+    render json: @post
   end
 
   def create
-    post = Post.create!(post_params)
+    @post = Post.create!(post_params)
     
-    if post
-      render json: post
+    if @post
+      render json: @post
     else
-      render json: post.errors
+      render json: @post.errors
     end
   end
 

@@ -3,6 +3,7 @@ import CommentBlock  from "./CommentBlock.tsx"
 import { Container, Typography, Stack } from "@mui/material"
 import { commentProps } from "../../types/types.tsx"
 import { PostContext } from "../../pages/PostThread.tsx"
+import { useQuery } from "@tanstack/react-query"
 
 let def: number | undefined
 
@@ -19,11 +20,23 @@ export const CommentContext = createContext(
 
 function CommentList() {
     const post = useContext(PostContext)
-    const [comments, setComments] = useState<Array<commentProps>>([{id: -1, 
-                                                                    commenter: " ", 
-                                                                    body: " ", 
-                                                                    post_id: post.id,
-                                                                    parent_id: undefined}])
+    const { isLoading, isError, data: comments, error } = useQuery({
+        queryFn: () => 
+            fetch(`/api/v1/posts/${post.id}/comments`)
+            .then((res) => res.json(),
+            ),
+        queryKey: ['comments'],
+    })
+
+    if(isLoading) {
+        return <span>Loading</span>
+    }
+
+    if(isError) {
+        return <span>Error: {error.message}</span>
+    }
+
+    console.log(comments)
     
     const CommentContextProvider = ({ children }) => {
         return (
@@ -33,35 +46,22 @@ function CommentList() {
         )
     }    
 
-    useEffect(() => {
-        const url = `/api/v1/posts/${post.id}/comments`
-        fetch(url)
-          .then((res) => {
-            if (res.ok) {
-              return res.json()
-            }
-            throw new Error("Network response was not ok.")
-          })
-          .then((data) => setComments(data))
-          .catch((error) => console.log(error))
-    }, [])
-
     function filterComments(comment: commentProps) {
         return comment.post_id == post.id && comment.parent_id == null
     }
 
-    const allComments = comments.filter(filterComments)
+    const allRootComments = comments.filter(filterComments)
                                 .map((comment) => 
                                     <div key={comment.id}>
                                         <CommentBlock {...comment}/>
                                     </div>    
                                 )
-
+    
     return <CommentContextProvider>
         <Container>
             <Stack spacing={1}>
-                {allComments.length !== 0 
-                                ? allComments 
+                {allRootComments.length !== 0 
+                                ? allRootComments 
                                 : <Typography fontSize={12}>
                                     There are no comments on this post yet!
                                 </Typography>

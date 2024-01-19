@@ -8,7 +8,7 @@ function CommentBlock(props: commentProps) {
     function filterComments(comment: commentProps) {
         return comment.parent_id == props.id
     }
-
+    
     const prevBlock = comments.filter(filterComments)
                                 .map((comment) =>
                                         <CommentBlock {...comment} key={comment.id} />

@@ -2,8 +2,8 @@ class Api::V1::CommentsController < ApplicationController
   before_action :set_comment, only: %i[show destroy edit update]
 
   def index
-    comment = Comment.all.order(created_at: :desc)
-    render json: comment
+    @comment = Comment.all.order(created_at: :desc)
+    render json: @comment
   end
 
   def new
@@ -12,13 +12,13 @@ class Api::V1::CommentsController < ApplicationController
   end
   
   def create
-    post = Post.find(params[:post_id])
-    comment = post.comments.create!(comment_params)
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.create!(comment_params)
 
     if comment
-      render json: comment
+      render json: @comment
     else
-      render json: comment.errors
+      render json: @comment.errors
     end
   end
 
