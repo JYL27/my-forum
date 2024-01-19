@@ -1,8 +1,14 @@
 import React from "react"
 import LoginForm from "../components/LoginForm"
-import { Stack, Divider, Container, Typography } from "@mui/material"
+import { Stack, Divider, Container, Typography, Button } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
 function LoginPage() {
+    const navigate = useNavigate()
+
+    function handleNoLogin() {
+        navigate("/posts")
+    }
 
     return (
         <Container>
@@ -16,6 +22,7 @@ function LoginPage() {
             >
                 <LoginForm />
             </Stack>
+            <Button onClick={handleNoLogin}>View posts without logging in</Button>
         </Container>
     )      
 }

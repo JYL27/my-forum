@@ -13,7 +13,7 @@ export const QueryContext = createContext({query: "",
                                                  receives and sets tag filters via a checkbox menu.*/
 
 function MainPage() {
-
+    
     const QueryContextProvider = ({ children }) => {
         const [query, setQuery] = useState("");
         const [tagFilter, setTagFilter] = useState(allTagsObject)

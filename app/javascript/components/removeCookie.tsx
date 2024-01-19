@@ -2,7 +2,6 @@
 export default function removeCookie(key: string) {
     const cDecoded = decodeURIComponent(document.cookie)
     const cookies = cDecoded.split("; ")
-    let result: string | undefined = undefined
 
     cookies.forEach(element => {
         if(element.indexOf(`${key}=`) == 0){

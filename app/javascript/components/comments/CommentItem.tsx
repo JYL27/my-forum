@@ -10,6 +10,8 @@ import CommentIcon from '@mui/icons-material/Comment'
 function CommentItem(props: commentProps) {
     const navigate = useNavigate()
     const user = getCookie("user")
+    const commenter = props.commenter
+    console.log(commenter)
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openMenu = Boolean(anchorEl)
 
@@ -67,7 +69,7 @@ function CommentItem(props: commentProps) {
         }>
         <CardContent>
             <Typography fontSize={16}>
-                {props.commenter}
+                {commenter}
             </Typography>
             <Typography fontSize={12}>
                 {props.body}
@@ -77,7 +79,7 @@ function CommentItem(props: commentProps) {
                 <CommentIcon />
               </IconButton>
             </Tooltip>
-              {user == props.commenter && 
+              {user == commenter && 
                 <React.Fragment>
                     <IconButton onClick={handleClick}>
                         <MoreVertIcon />
