@@ -1,4 +1,3 @@
-
 export default function removeCookie(key: string) {
     const cDecoded = decodeURIComponent(document.cookie)
     const cookies = cDecoded.split("; ")

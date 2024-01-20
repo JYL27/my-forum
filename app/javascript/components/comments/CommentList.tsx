@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from "react"
+import React, { useContext, createContext } from "react"
 import CommentBlock  from "./CommentBlock.tsx"
 import { Container, Typography, Stack } from "@mui/material"
 import { commentProps } from "../../types/types.tsx"
@@ -19,14 +19,14 @@ export const CommentContext = createContext(
 )
 
 function CommentList() {
-    const post = useContext(PostContext)
+    const post = useContext(PostContext) 
     const { isLoading, isError, data: comments, error } = useQuery({
         queryFn: () => 
             fetch(`/api/v1/posts/${post.id}/comments`)
             .then((res) => res.json(),
             ),
         queryKey: ['comments'],
-    })
+    }) // requests and retrieves comments 
 
     if(isLoading) {
         return <span>Loading</span>
@@ -46,27 +46,29 @@ function CommentList() {
 
     function filterComments(comment: commentProps) {
         return comment.post_id == post.id && comment.parent_id == null
-    }
+    } // filter all comments that belong to the post and are root comments i.e. not replies
 
     const allRootComments = comments.filter(filterComments)
-                                .map((comment) => 
+                                .map((comment: commentProps) => 
                                     <div key={comment.id}>
                                         <CommentBlock {...comment}/>
                                     </div>    
                                 )
     
-    return <CommentContextProvider>
+    return (
         <Container>
-            <Stack spacing={1}>
-                {allRootComments.length !== 0 
-                                ? allRootComments 
-                                : <Typography fontSize={12}>
-                                    There are no comments on this post yet!
-                                </Typography>
-                            }
-            </Stack>
+            <CommentContextProvider>
+                <Stack spacing={1}>
+                    {allRootComments.length !== 0 
+                                    ? allRootComments 
+                                    : <Typography className="no-comments-text">
+                                        There are no comments on this post yet!
+                                    </Typography>
+                                } {/*if there are no comments to be rendered, render a placeholder text */}
+                </Stack>
+            </CommentContextProvider>
         </Container>
-    </CommentContextProvider>
+    )
 
 }   
 

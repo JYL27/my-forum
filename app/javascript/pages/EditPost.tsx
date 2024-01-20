@@ -1,9 +1,15 @@
-import React, { useEffect } from "react"
+import React from "react"
+import { Box } from "@mui/material"
 import PostForm from "../components/posts/PostForm"
+import NavBar from "../components/NavBar"
 
 function EditPost() {
-
-    return <PostForm action="Edit"/>
+    return (
+        <Box>
+            <NavBar />
+            <PostForm action="Edit"/>
+        </Box>
+    )
 }
 
 export default EditPost

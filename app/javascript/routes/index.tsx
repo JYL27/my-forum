@@ -7,7 +7,7 @@ import EditPost from "../pages/EditPost"
 import LoginPage from "../pages/LoginPage"
 import NewComment from "../pages/NewComment"
 import EditComment from "../pages/EditComment"
-import isLoggedIn from "../components/isLoggedIn"
+import isLoggedIn from "../components/helpers/isLoggedIn"
 
 const ProtectedRoute = () => {
   if(!isLoggedIn()){
@@ -27,7 +27,8 @@ export default (
   <Router>
       <Routes>
         <Route element={<BypassRoute />}>
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Navigate to="/login" />} /> {/* if user is not logged in, root page redirects to login page.
+                                                                    Else, root page redirects to main page*/}
           <Route path="/login" element={<LoginPage />} />
         </Route>
 

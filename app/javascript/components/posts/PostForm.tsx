@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import getToken from "../../components/getToken"
+import getToken from "../helpers/getToken"
 import { allTags } from "../../types/types"
 import { Button, Box, Container, TextField, Typography, MenuItem } from "@mui/material"
-import getCookie from "../getCookie"
+import getCookie from "../helpers/getCookie"
 // try to implement confirmation message
 
 function PostForm(props: {action: "Create" | "Edit"}) {
     const navigate = useNavigate()
-    const { state } = useLocation()
+    const { state } = useLocation() // retrieves the location state to fill in the form
     // state variables for each element in the post object excluding id, and whether an error should be displayed on submit
     const [title, setTitle] = useState(state.title)
     const [body, setBody] = useState(state.body)
@@ -17,7 +17,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
     const [bodyError, setBodyError] = useState(false)
     const [tagError, setTagError] = useState(false)
 
-    const poster = getCookie("user")
+    const poster = getCookie("user") // sets poster as the user
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setFunction: Function) {
         setFunction(e.target.value) // sets the respective element variable on change of text field
@@ -81,12 +81,13 @@ function PostForm(props: {action: "Create" | "Edit"}) {
     return (
         <Box margin={2}>
             <Container>
-                <Typography variant="h3">
+                <Typography className="form-header-text">
                     {/*displays correct action*/}
                     {props.action == "Create" ? "Create a New Post" : "Edit your Post"}
                 </Typography>
                 <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <TextField 
+                        className="text-field-reg"
                         onChange={(e) => handleChange(e, setTitle)}
                         label="Post Title"
                         value={title}
@@ -96,6 +97,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                         required
                         error={titleError}/>
                     <TextField 
+                        className="text-field-multi"
                         onChange={(e) => handleChange(e, setBody)}
                         label="Post Body"
                         value={body}
@@ -129,8 +131,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                     </Button>
                 </form>
             </Container>
-        </Box>
-            
+        </Box>    
     )
 }
 

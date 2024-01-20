@@ -30,16 +30,16 @@ type commentFormProps = {
 }
 // props taken in PostItem component
 type postProps = {
-    poster: string
     id: number
+    poster: string
     title: string
     body: string
     tag: typeof allTags[number]
 }
 
-const samplePost = {
-    poster: " ",
+const defaultPost = {
     id: -1,
+    poster: " ",
     title: " ",
     body: " ",
     tag: "General"
@@ -54,4 +54,8 @@ type commentProps = {
     parent_id: number | undefined
 }
 
-export { allTags, allTagsObject, postFormProps, commentFormProps, postProps, commentProps, samplePost }
+type postParams = {
+    id: string
+}
+
+export { allTags, allTagsObject, postFormProps, commentFormProps, postProps, commentProps, defaultPost, postParams }

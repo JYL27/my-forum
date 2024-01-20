@@ -1,62 +1,56 @@
-import React, { useContext, useState } from "react"
-import { Button, Toolbar, AppBar, TextField, IconButton, Tooltip } from "@mui/material"
+import React from "react"
+import { Toolbar, AppBar, IconButton, Tooltip, Typography } from "@mui/material"
 import PostAddIcon from "@mui/icons-material/PostAdd"
-import SearchIcon from "@mui/icons-material/Search"
-import { QueryContext } from "../pages/MainPage"
+import LoginIcon from '@mui/icons-material/Login'
+import LogoutIcon from '@mui/icons-material/Logout'
 import { useNavigate } from "react-router-dom"
-import removeCookie from "./removeCookie"
-import isLoggedIn from "./isLoggedIn"
+import removeCookie from "./helpers/removeCookie"
+import isLoggedIn from "./helpers/isLoggedIn"
+import getCookie from "./helpers/getCookie"
 
 function NavBar() {
-    const { setQuery } = useContext(QueryContext) // retrieves setQuery function via context provider
-    const navigate = useNavigate()
     
-    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        setQuery(e.target.value)
-    } // receives change in text field and sets query variable accordingly
+  const navigate = useNavigate()
+  const user = getCookie("user") // retrieves username via cookie
 
-    function handleCreate() {
-      navigate("/new", {state: {id: -1, title: " ", body: " ", tag: "General"}})
-    }
+  function handleCreate() {
+    navigate("/new", {state: {id: -1, title: " ", body: " ", tag: "General"}})
+  } // if user chooses to create a new post, navigate to new post page with a default location state
 
-    function handleLogin() {
-      navigate("/")
-    }
+  function handleLogin() {
+    navigate("/login")
+  } // if user chooses to login, navigate to login page
 
-    function handleLogout() {
-      removeCookie("user")
-      navigate("/")
-    }
+  function handleLogout() {
+    removeCookie("user")
+    navigate("/")
+  } /* if user chooses to logout, remove the cookie containing the user's username 
+      and redirect to root page (in this case, login page) */
 
-    return (
-      <AppBar position="static">
-        <Toolbar variant="dense" sx={{height: 50, px: 5}}>
-          <form>
-            <TextField 
-              onChange={handleChange}
-              id="search-field" 
-              variant="filled"
-              placeholder="Search for posts"
-              size="small">
-            </TextField>
-            <Tooltip title="Search" placement="bottom">
-              <IconButton type="submit" size="large">
-                <SearchIcon />
-              </IconButton>
-            </Tooltip>
-          </form>
-          <Tooltip title="Create New Post" placement="bottom">
-            <IconButton size="large" onClick={handleCreate}>
-              <PostAddIcon />
-            </IconButton>
-          </Tooltip>
-          {isLoggedIn() ? <Button variant="outlined" color="inherit" onClick={handleLogout}>Logout</Button>
-                        : <Button variant="outlined" color="inherit" onClick={handleLogin}>Login</Button>}
-          
-        </Toolbar>
-      </AppBar>
-    )
+  return (
+    <AppBar position="static">
+      <Toolbar variant="dense" sx={{height: 50, px: 5}}>
+        <Typography className="nav-bar-text">
+          Logged in as: {user}
+        </Typography>
+        <Tooltip title="Create New Post" placement="bottom">
+          <IconButton size="large" onClick={handleCreate}>
+            <PostAddIcon />
+          </IconButton>
+        </Tooltip>
+        {isLoggedIn() ? <Tooltip title="Logout" placement="bottom">
+                          <IconButton size="large" onClick={handleLogout}>
+                            <LogoutIcon />
+                          </IconButton>
+                        </Tooltip>
+                      : <Tooltip title="Login" placement="bottom">
+                          <IconButton size="large" onClick={handleLogin}>
+                            <LoginIcon />
+                          </IconButton>
+                        </Tooltip>} {/* checks if user is logged in and renders the corresponding icon button */}
+      </Toolbar>
+    </AppBar>
+  )
 }
 
 export default NavBar
-    
