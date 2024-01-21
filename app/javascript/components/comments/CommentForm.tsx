@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import getToken from "../helpers/getToken"
-import { Button, Box, Container, TextField, Typography } from "@mui/material"
+import { Button, Box, Container, TextField, Typography, 
+        Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
 import { useLocation, useNavigate } from "react-router-dom"
 import getCookie from "../helpers/getCookie"
 
@@ -10,9 +11,18 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
     // state variable for comment body, and whether an error should be displayed on submit
     const [body, setBody] = useState(state.body)
     const [bodyError, setBodyError] = useState(false)
+    const [open, setOpen] = useState<boolean>(false)
 
     const commenter = getCookie("user") // retrieves commenter value via cookie
 
+    function handleOpenDialog() {
+        setOpen(true)
+    }
+  
+    function handleCloseDialog() {
+        setOpen(false)
+    }
+    
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         setBody(e.target.value) // on change, set the state variable
     }
@@ -20,7 +30,8 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault() // prevents refreshing of the page
         setBodyError(false) // resets error to false
-
+        handleCloseDialog()
+        
         //sets the appropriate url for http requests
         const url = props.action == ("Add" || "Reply")
                                 ? `/api/v1/posts/${state.post_id}/comments` 
@@ -67,7 +78,7 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
                                 ? "Edit your comment"
                                 : "Add a Reply"}
                 </Typography>
-                <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <form noValidate autoComplete="off">
                     <TextField 
                         className="text-field-multi"
                         color="primary"
@@ -82,13 +93,30 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
                         required
                         error={bodyError}/>
                     <Button
-                        type="submit">
+                        onClick={handleOpenDialog}>
                         {props.action == "Add"
                                     ? "Add Comment"
                                     : props.action == "Edit"
                                     ? "Edit Comment"
                                     : "Reply"} 
                     </Button>
+                    <Dialog
+                        open={open}
+                        onClose={handleCloseDialog}
+                    >
+                        <DialogTitle>
+                            Are you sure you want to proceed?
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                You may edit or delete your comment later.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleCloseDialog}>No</Button>
+                            <Button onClick={handleSubmit}>Yes</Button>
+                        </DialogActions>
+                    </Dialog>
                     <Button href={`/posts/${state.post_id}`}>
                         Back to Post
                     </Button>

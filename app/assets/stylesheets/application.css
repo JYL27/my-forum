@@ -1,6 +1,3 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
-
 .page-container {
     margin: auto;
     display: flex;
@@ -20,7 +17,7 @@
 
 .button {
     font-size: 14px;
-    color: #0dcb39;
+    color: #0d39cb;
     font-family: 'Courier New', Courier, monospace;
 }
 

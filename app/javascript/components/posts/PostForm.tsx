@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import getToken from "../helpers/getToken"
 import { allTags } from "../../types/types"
-import { Button, Box, Container, TextField, Typography, MenuItem } from "@mui/material"
+import { Button, Box, Container, TextField, Typography, MenuItem,
+        Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
 import getCookie from "../helpers/getCookie"
 // try to implement confirmation message
 
@@ -16,11 +17,20 @@ function PostForm(props: {action: "Create" | "Edit"}) {
     const [titleError, setTitleError] = useState(false)
     const [bodyError, setBodyError] = useState(false)
     const [tagError, setTagError] = useState(false)
+    const [open, setOpen] = useState<boolean>(false)
 
     const poster = getCookie("user") // sets poster as the user
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setFunction: Function) {
         setFunction(e.target.value) // sets the respective element variable on change of text field
+    }
+
+    function handleOpenDialog() {
+        setOpen(true)
+    }
+  
+    function handleCloseDialog() {
+        setOpen(false)
     }
 
     const tagMenuItems = allTags.map((tag) => <MenuItem key={tag} value={tag}>
@@ -32,6 +42,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
         setTitleError(false) // resets all error to false
         setBodyError(false)
         setTagError(false)
+        handleCloseDialog()
         
         // checks if user wishes to create a new post or edit an existing post. URL changes accordingly
         const url = props.action == "Create" ? "/api/v1/posts" : `/api/v1/posts/${state.id}`
@@ -49,7 +60,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
             if(tag.length == 0) {
                 setTagError(true)
             }
-            return;
+            return
         } 
 
         const content = {
@@ -85,7 +96,7 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                     {/*displays correct action*/}
                     {props.action == "Create" ? "Create a New Post" : "Edit your Post"}
                 </Typography>
-                <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <form noValidate autoComplete="off">
                     <TextField 
                         className="text-field-reg"
                         onChange={(e) => handleChange(e, setTitle)}
@@ -122,10 +133,27 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                         {tagMenuItems}
                     </TextField>
                     <Button
-                        type="submit">
+                        onClick={handleOpenDialog}>
                         {/*displays correct action*/}
                         {props.action} Post
                     </Button>
+                    <Dialog
+                        open={open}
+                        onClose={handleCloseDialog}
+                    >
+                        <DialogTitle>
+                            Are you sure you want to proceed?
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                You may edit or delete your post later.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleCloseDialog}>No</Button>
+                            <Button onClick={handleSubmit}>Yes</Button>
+                        </DialogActions>
+                    </Dialog>
                     <Button href="/posts">
                         Back to Posts
                     </Button>
