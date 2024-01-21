@@ -7,7 +7,7 @@ function LoginPage() {
     return (
         <Box>
             <Container className="page-container">
-                <Typography className="header-text">
+                <Typography className="display-1">
                     Welcome to Gossip!
                 </Typography>
             </Container>
