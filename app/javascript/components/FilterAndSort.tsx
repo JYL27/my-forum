@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react"
 import { QueryContext } from "../pages/MainPage"
-import { Button, FormControlLabel, Checkbox, TextField, Container, Stack, Menu } from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search"
+import { Button, FormControlLabel, Checkbox, TextField, Box, Menu } from "@mui/material"
 import { allTags } from "../types/types.tsx"
 
 function FilterAndSort() {
@@ -41,12 +40,21 @@ function FilterAndSort() {
                                           </span>
                                         )
     return (
-        <Container>
-            <Stack direction="row">
+        <Box sx={
+            { 
+                paddingTop: 3,
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(5, 1fr)',
+                gap: 1,
+                gridTemplateRows: 'auto',
+                gridTemplateAreas: `"filter . search . sort"`
+            }}>
+            <Box sx={
+                {
+                    gridArea: "filter"
+                }}>
                 <Button 
-                    className="filter-button"
-                    variant="outlined" 
-                    color="inherit" 
+                    variant="outlined"  
                     onClick={handleClick}
                 >
                     Filter posts
@@ -58,16 +66,29 @@ function FilterAndSort() {
                 >
                     {allCheckboxes}
                 </Menu>
-                <SearchIcon />
+            </Box>
+            <Box sx={
+                {
+                    gridArea: "search"
+                }}>
                 <TextField 
-                    onChange={handleChange}
-                    id="search-field" 
-                    variant="filled"
+                    onChange={handleChange} 
                     placeholder="Search for posts"
                     size="small">
                 </TextField>
-            </Stack>
-        </Container>
+            </Box>
+            <Box sx={
+                {
+                    gridArea: "sort"
+                }}>
+                <Button 
+                    variant="outlined" 
+                    onClick={handleClick}
+                >
+                    Sort posts
+                </Button>
+            </Box>
+        </Box>
     )
 }
 

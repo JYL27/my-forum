@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, CardContent, Chip, Typography, CardActions, Button } from "@mui/material"
+import { Card, CardContent, Chip, Typography, CardActions, Button, Box } from "@mui/material"
 import { postProps } from "../../types/types"
 
 function PostItem(props: postProps) {
@@ -10,25 +10,58 @@ function PostItem(props: postProps) {
                 {
                     border: 1, 
                     margin: 1, 
-                    maxHeight: 200, 
-                    maxWidth:500, 
+                    height: 200, 
+                    width: 500, 
                     textAlign: "center",
                     boxShadow: 1
                 }
             }
         >
-            <CardContent sx={{paddingBottom: 1}}>
-                <Typography className="post-item-title">
+            <CardContent sx={
+                {
+                    height: 150,
+                    paddingY: 2
+                }}>
+                <Typography 
+                    noWrap
+                    fontWeight={5}
+                    fontSize={24}
+                    paddingTop={2}
+                >
                     {props.title} {/* displays post title*/}
                 </Typography>
-                <Typography className="post-item-poster">
-                    {props.poster}
+                <Typography 
+                    noWrap
+                    fontWeight={2}
+                    fontSize={14}
+                    paddingTop={1}
+                >
+                    {props.body} {/* displays post title*/}
                 </Typography>
-                <Chip label={props.tag}/> {/* displays post tag*/}
             </CardContent>
-            <CardActions>
-                <Button size="small" href={`/posts/${props.id}`}>Read Post</Button> {/* displays button 
+            <CardActions sx={
+                {
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(5, 1fr)',
+                    gap: 1,
+                    gridTemplateRows: 'auto',
+                    gridTemplateAreas: `"button . tag . poster"`
+                }}>
+                <Box sx={{gridArea: "button"}}>
+                    <Button size="small" href={`/posts/${props.id}`}>Read Post</Button> {/* displays button 
                                                                                         to direct to post thread*/}
+                </Box>
+                <Box sx={{gridArea: "tag"}}>
+                    <Chip size="small" label={props.tag}/> {/* displays post tag*/}
+                </Box>
+                <Box sx={{gridArea: "poster"}}>
+                    <Typography 
+                        noWrap
+                        fontSize={12}
+                    >
+                        Posted by: {props.poster}
+                    </Typography>
+                </Box>                                                                            
             </CardActions>
         </Card>
     )

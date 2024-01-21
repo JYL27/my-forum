@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { Menu, MenuItem, Dialog, DialogActions, DialogContent, 
-          DialogContentText, DialogTitle, Button, IconButton } from "@mui/material"
+          DialogContentText, DialogTitle, Button, IconButton, Box } from "@mui/material"
 import getToken from "../helpers/getToken"
 import { PostContext } from "../../pages/PostThread"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -54,7 +54,7 @@ function PostActionMenu() {
   } // if user chooses to edit the post, navigate to edit post form with the post props as the location state
 
   return (
-    <React.Fragment>
+    <Box>
       <IconButton onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
@@ -87,7 +87,7 @@ function PostActionMenu() {
           <Button onClick={handleDelete}>Yes</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </Box>
   )
 }
 

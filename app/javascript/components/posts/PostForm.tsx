@@ -92,13 +92,12 @@ function PostForm(props: {action: "Create" | "Edit"}) {
     return (
         <Box margin={2}>
             <Container>
-                <Typography className="form-header-text">
+                <Typography variant="h5">
                     {/*displays correct action*/}
                     {props.action == "Create" ? "Create a New Post" : "Edit your Post"}
                 </Typography>
                 <form noValidate autoComplete="off">
                     <TextField 
-                        className="text-field-reg"
                         onChange={(e) => handleChange(e, setTitle)}
                         label="Post Title"
                         value={title}
@@ -108,7 +107,6 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                         required
                         error={titleError}/>
                     <TextField 
-                        className="text-field-multi"
                         onChange={(e) => handleChange(e, setBody)}
                         label="Post Body"
                         value={body}

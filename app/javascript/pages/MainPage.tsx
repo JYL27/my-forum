@@ -24,7 +24,15 @@ function MainPage() {
     }
 
     return (
-        <Box>
+        <Box sx={
+            {   
+                width: 1,
+                height: 1,
+                textAlign: "center",
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column"
+            }}>
             <QueryContextProvider>
                 <NavBar />
                 <FilterAndSort />

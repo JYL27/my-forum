@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Typography, Container, IconButton, Tooltip } from "@mui/material"
+import { Typography, Container, Divider, Paper, Button, Box } from "@mui/material"
 import PostActionMenu from "./PostActionMenu"
 import CommentIcon from '@mui/icons-material/Comment'
 import { PostContext } from "../../pages/PostThread"
@@ -25,22 +25,46 @@ function PostDisplay() {
   } // if user chooses to add comment, navigate to the new comment page with a default location state
 
   return (
-    <Container className="page-container">
-      <Typography className="post-poster">
-        {post.poster}
-      </Typography>
-      <Typography className="post-title">
-        {post.title}
-      </Typography>
-      <Typography className="post-body">
-        {post.body}
-      </Typography>
-      {user == post.poster && <PostActionMenu />} {/* if user is the poster, render the post action menu */}
-      <Tooltip title="Add a Comment" placement="bottom">
-        <IconButton size="large" onClick={handleAddComment}>
-          <CommentIcon />
-        </IconButton>
-      </Tooltip>
+    <Container>
+      <Paper sx={
+        {
+          height: 300,
+          margin: 2,
+          textAlign: "left",
+          display: "flex"
+        }}>
+          <Box sx={
+            {
+              margin: 2,
+              width: 24/25
+            }}>
+            <Typography 
+              fontSize={32}
+              fontWeight={8}
+            >
+              {post.title}
+            </Typography>
+            <Typography 
+              fontSize={14}
+            >
+              Post by: {post.poster}
+            </Typography>
+            <Divider />
+            <Typography 
+              fontSize={20}
+              fontWeight={2}
+            >
+              {post.body}
+            </Typography>
+          </Box>
+        {user == post.poster && <PostActionMenu />} {/* if user is the poster, render the post action menu */}
+      </Paper>
+      <Button 
+        onClick={handleAddComment} 
+        startIcon={<CommentIcon />}
+      >
+        Add a Comment
+      </Button>
     </Container>
   )
 }

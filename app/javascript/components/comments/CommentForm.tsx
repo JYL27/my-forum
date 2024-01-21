@@ -71,7 +71,7 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
     return (
         <Box margin={2}>
             <Container>
-                <Typography className="form-header-text">
+                <Typography variant="h5">
                     {props.action == "Add" 
                                 ? "Add a comment" 
                                 : props.action == "Edit"
@@ -80,7 +80,6 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
                 </Typography>
                 <form noValidate autoComplete="off">
                     <TextField 
-                        className="text-field-multi"
                         color="primary"
                         onChange={handleChange}
                         label="Comment Body"

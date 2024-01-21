@@ -1,15 +1,16 @@
 import React from "react"
-import { Toolbar, AppBar, IconButton, Tooltip, Typography } from "@mui/material"
+import { Toolbar, AppBar, IconButton, Tooltip, Typography, Stack, Box } from "@mui/material"
 import PostAddIcon from "@mui/icons-material/PostAdd"
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import removeCookie from "./helpers/removeCookie"
 import isLoggedIn from "./helpers/isLoggedIn"
 import getCookie from "./helpers/getCookie"
 
 function NavBar() {
-    
+  const location = useLocation()
+  console.log(location)
   const navigate = useNavigate()
   const user = getCookie("user") // retrieves username via cookie
 
@@ -29,16 +30,39 @@ function NavBar() {
 
   return (
     <AppBar position="static">
-      <Toolbar variant="dense" sx={{height: 50, px: 5}}>
-        <Typography className="nav-bar-text">
-          Logged in as: {user}
-        </Typography>
-        <Tooltip title="Create New Post" placement="bottom">
-          <IconButton size="large" onClick={handleCreate}>
-            <PostAddIcon />
-          </IconButton>
-        </Tooltip>
-        {isLoggedIn() ? <Tooltip title="Logout" placement="bottom">
+      <Toolbar 
+        sx={
+          {
+            height: 50, 
+            px: 5,
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(5, 1fr)',
+            gap: 1,
+            gridTemplateRows: 'auto',
+            gridTemplateAreas: `". . username . buttons"`
+          }}
+          variant="dense" 
+      >
+        <Box sx={{gridArea: "username"}}>
+          <Typography variant="h6">
+            Logged in as: {user}
+          </Typography>
+        </Box>
+        
+        <Stack 
+          direction="row"
+          sx={
+            {
+              gridArea: "buttons",
+              justifyContent: "flex-end"
+            }}
+        >
+          <Tooltip title="Create New Post" placement="bottom">
+            <IconButton size="large" onClick={handleCreate}>
+              <PostAddIcon />
+            </IconButton>
+          </Tooltip>
+          {isLoggedIn() ? <Tooltip title="Logout" placement="bottom">
                           <IconButton size="large" onClick={handleLogout}>
                             <LogoutIcon />
                           </IconButton>
@@ -48,6 +72,7 @@ function NavBar() {
                             <LoginIcon />
                           </IconButton>
                         </Tooltip>} {/* checks if user is logged in and renders the corresponding icon button */}
+        </Stack>
       </Toolbar>
     </AppBar>
   )

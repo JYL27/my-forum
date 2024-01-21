@@ -5,6 +5,7 @@ import CommentList from "../components/comments/CommentList"
 import PostDisplay from "../components/posts/PostDisplay"
 import { useQuery } from "@tanstack/react-query"
 import { defaultPost, postParams } from "../types/types"
+import NavBar from "../components/NavBar"
 
 export const PostContext = createContext(
   defaultPost
@@ -38,13 +39,20 @@ function PostThread() {
   }
 
   return(
-    <Box>
+    <Box sx={
+      {   
+          width: 1,
+          height: 1,
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column"
+      }}>
+      <NavBar />
       <PostContextProvider>
         <PostDisplay />
         <CommentList />
       </PostContextProvider>
       <Button 
-        className="button"
         href="/posts"
       >
         Back to Posts

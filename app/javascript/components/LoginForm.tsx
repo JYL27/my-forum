@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button, Typography, TextField, Container } from "@mui/material"
+import { Button, Typography, TextField, Container, Stack, Box } from "@mui/material"
 import { useCookies } from "react-cookie"
 
 function LoginForm() {
@@ -43,33 +43,49 @@ function LoginForm() {
                                 which sets the cookie and redirects the user to the main page */
     }
 
-    return <Container>
-        <Typography className="form-header-text">
-            Login!
-        </Typography>
-        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <TextField 
-                className="text-field-reg"
-                onChange={handleChange}
-                label="Username"
-                value={username}
-                required
-                error={usernameError}>
-            </TextField>
-            <Button className="button"
-                    type="submit" 
-            >
-                Login
-            </Button>
-            <Button 
-                className="button" 
-                onClick={handleNoLogin}
-            >
-                View posts without logging in
-            </Button> {/* users may choose not to log in, after which 
-                            they may view posts but not create or comment on them */}
-        </form>
-    </Container>
+    return (
+        <Container sx={
+            {
+                display: "flex",
+                flexDirection: "column"
+            }}>
+            <Typography variant="h5">
+                Login!
+            </Typography>
+            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <TextField 
+                    sx={{paddingTop: 1}}
+                    onChange={handleChange}
+                    label="Username"
+                    value={username}
+                    required
+                    error={usernameError}>
+                </TextField>
+                <Stack 
+                    direction="row" 
+                    sx={
+                        {
+                            width: 400,
+                            margin: "auto",
+                            paddingY: 1,
+                            paddingLeft: 3
+                        }}
+                >
+                    <Button 
+                        type="submit" 
+                    >
+                        Login
+                    </Button>
+                    <Button 
+                        onClick={handleNoLogin}
+                    >
+                        View posts without logging in
+                    </Button> {/* users may choose not to log in, after which 
+                                they may view posts but not create or comment on them */}
+                </Stack>
+            </form>
+        </Container>
+    )
 }
 
 

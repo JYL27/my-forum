@@ -44,9 +44,19 @@ function PostList() {
       </div>
   )
 
-  return <Container className="page-container">
+  return (
+  <Container sx={
+    {   
+      width: 1,
+      height: 1,
+      textAlign: "center",
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column"
+    }}
+  >
     {allPosts}
-  </Container>
+  </Container>)
 } 
 
 export default PostList
