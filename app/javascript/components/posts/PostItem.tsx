@@ -19,7 +19,7 @@ function PostItem(props: postProps) {
         >
             <CardContent sx={
                 {
-                    height: 150,
+                    height: 3/4,
                     paddingY: 2
                 }}>
                 <Typography 

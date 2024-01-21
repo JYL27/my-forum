@@ -3,14 +3,13 @@ import { Toolbar, AppBar, IconButton, Tooltip, Typography, Stack, Box } from "@m
 import PostAddIcon from "@mui/icons-material/PostAdd"
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import removeCookie from "./helpers/removeCookie"
 import isLoggedIn from "./helpers/isLoggedIn"
 import getCookie from "./helpers/getCookie"
+import HomeIcon from '@mui/icons-material/Home'
 
 function NavBar() {
-  const location = useLocation()
-  console.log(location)
   const navigate = useNavigate()
   const user = getCookie("user") // retrieves username via cookie
 
@@ -27,6 +26,10 @@ function NavBar() {
     navigate("/")
   } /* if user chooses to logout, remove the cookie containing the user's username 
       and redirect to root page (in this case, login page) */
+
+  function handleGoHome() {
+    navigate("/posts")
+  }
 
   return (
     <AppBar position="static">
@@ -57,6 +60,11 @@ function NavBar() {
               justifyContent: "flex-end"
             }}
         >
+          <Tooltip title="Go back to Posts" placement="bottom">
+            <IconButton size="large" onClick={handleGoHome}>
+              <HomeIcon />
+            </IconButton>
+          </Tooltip>
           <Tooltip title="Create New Post" placement="bottom">
             <IconButton size="large" onClick={handleCreate}>
               <PostAddIcon />

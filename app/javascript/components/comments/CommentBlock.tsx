@@ -19,7 +19,7 @@ function CommentBlock(props: commentProps) {
     return(
         <li key={props.id}>
             <CommentItem {...props}/>
-            <ul>
+            <ul style={{ listStyleType: "none" }}>
                 {prevBlock}
             </ul>
         </li>

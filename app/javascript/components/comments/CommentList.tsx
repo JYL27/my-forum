@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from "react"
 import CommentBlock  from "./CommentBlock.tsx"
-import { Container, Typography, Stack } from "@mui/material"
+import { Container, Typography, Box } from "@mui/material"
 import { commentProps } from "../../types/types.tsx"
 import { PostContext } from "../../pages/PostThread.tsx"
 import { useQuery } from "@tanstack/react-query"
@@ -50,22 +50,22 @@ function CommentList() {
 
     const allRootComments = comments.filter(filterComments)
                                 .map((comment: commentProps) => 
-                                    <div key={comment.id}>
+                                    <Box key={comment.id}>
                                         <CommentBlock {...comment}/>
-                                    </div>    
+                                    </Box>    
                                 )
     
     return (
         <Container>
             <CommentContextProvider>
-                <Stack spacing={1}>
+                <ul style={{ listStyleType: "none" }}>
                     {allRootComments.length !== 0 
                                     ? allRootComments 
-                                    : <Typography className="no-comments-text">
+                                    : <Typography variant="h6" fontWeight={5}>
                                         There are no comments on this post yet!
                                     </Typography>
-                                } {/*if there are no comments to be rendered, render a placeholder text */}
-                </Stack>
+                        } {/*if there are no comments to be rendered, render a placeholder text */}
+                </ul>
             </CommentContextProvider>
         </Container>
     )

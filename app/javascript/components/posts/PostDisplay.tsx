@@ -28,11 +28,14 @@ function PostDisplay() {
     <Container>
       <Paper sx={
         {
-          height: 300,
+          minHeight: 300,
+          height: "fit-content",
           margin: 2,
           textAlign: "left",
           display: "flex"
-        }}>
+        }}
+        square
+        >
           <Box sx={
             {
               margin: 2,

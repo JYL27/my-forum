@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Menu, MenuItem, Dialog, DialogActions, DialogContent, 
-            DialogContentText, DialogTitle, Button, IconButton } from "@mui/material"
+            DialogContentText, DialogTitle, Button, IconButton, Box } from "@mui/material"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import getToken from "../helpers/getToken"
 import { useNavigate } from "react-router-dom"
@@ -54,7 +54,7 @@ function CommentActionMenu(props: commentProps) {
 
 
     return (
-        <React.Fragment>
+        <Box>
             <IconButton onClick={handleClick}>
                 <MoreVertIcon />
             </IconButton>
@@ -75,7 +75,7 @@ function CommentActionMenu(props: commentProps) {
                 onClose={handleCloseDialog}
             >
                 <DialogTitle>
-                    Are you sure you want to delete Comment?
+                    Are you sure you want to delete the comment?
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -87,7 +87,8 @@ function CommentActionMenu(props: commentProps) {
                     <Button onClick={deleteComment}>Yes</Button>
                 </DialogActions>
             </Dialog>
-        </React.Fragment>
+        </Box>
+
     )
 }
 

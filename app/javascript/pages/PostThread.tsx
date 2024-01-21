@@ -1,6 +1,6 @@
 import React, { createContext } from "react"
 import { useParams } from "react-router-dom"
-import { Box, Button } from "@mui/material"
+import { Box } from "@mui/material"
 import CommentList from "../components/comments/CommentList"
 import PostDisplay from "../components/posts/PostDisplay"
 import { useQuery } from "@tanstack/react-query"
@@ -52,11 +52,6 @@ function PostThread() {
         <PostDisplay />
         <CommentList />
       </PostContextProvider>
-      <Button 
-        href="/posts"
-      >
-        Back to Posts
-      </Button>
     </Box>
   ) 
 }

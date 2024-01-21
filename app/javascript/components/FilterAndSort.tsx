@@ -83,7 +83,7 @@ function FilterAndSort() {
                 }}>
                 <Button 
                     variant="outlined" 
-                    onClick={handleClick}
+                    onClick={() => console.log("not implemented sorry")}
                 >
                     Sort posts
                 </Button>
