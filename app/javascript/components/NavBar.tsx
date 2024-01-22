@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Toolbar, AppBar, IconButton, Tooltip, Typography, Stack, Box } from "@mui/material"
+import { Toolbar, AppBar, IconButton, Tooltip, Typography, Stack, Box, Switch, FormControlLabel } from "@mui/material"
 import PostAddIcon from "@mui/icons-material/PostAdd"
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -8,13 +8,19 @@ import removeCookie from "./helpers/removeCookie"
 import isLoggedIn from "./helpers/isLoggedIn"
 import getCookie from "./helpers/getCookie"
 import HomeIcon from '@mui/icons-material/Home'
+import NightlightIcon from '@mui/icons-material/Nightlight'
+import LightModeIcon from '@mui/icons-material/LightMode'
 import { defaultPost } from "../types/types"
 import { ThemeContext } from "."
 
 function NavBar() {
   const navigate = useNavigate()
   const user = getCookie("user") // retrieves username via cookie
-  const setIsDarkTheme = useContext(ThemeContext)
+  const {isDarkTheme, setIsDarkTheme} = useContext(ThemeContext)
+
+  function handleChangeTheme() {
+    setIsDarkTheme(!isDarkTheme)
+  }
   
   function handleCreate() {
     navigate("/new", {state: defaultPost})
@@ -45,10 +51,18 @@ function NavBar() {
             gridTemplateColumns: 'repeat(5, 1fr)',
             gap: 1,
             gridTemplateRows: 'auto',
-            gridTemplateAreas: `". . username . buttons"`
+            gridTemplateAreas: `"theme . username . buttons"`
           }}
           variant="dense" 
       >
+        <Box sx={{gridArea: "theme"}}>
+          <FormControlLabel 
+            control={<Switch 
+                      icon={<LightModeIcon />}
+                      checkedIcon={<NightlightIcon />}
+                      onChange={handleChangeTheme} />} 
+            label={isDarkTheme ? "Current Theme: Dark" : "Current Theme: Light"}/>
+        </Box>
         <Box sx={{gridArea: "username"}}>
           <Typography variant="h6">
             Logged in as: {user}

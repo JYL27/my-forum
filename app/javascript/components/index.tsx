@@ -7,25 +7,36 @@ import { ThemeProvider } from "@emotion/react"
 import { lightTheme, darkTheme } from "./helpers/theme"
 import { CssBaseline } from "@mui/material"
 
-export const ThemeContext = createContext((_: boolean) => {})
+export const ThemeContext = createContext({isDarkTheme: false, setIsDarkTheme: (_: boolean) => {}})
+
+function ThemeProviders ({ children }) {
+  const [isDarkTheme, setIsDarkTheme] = useState(false)
+
+  return (
+    <ThemeContext.Provider value={{isDarkTheme, setIsDarkTheme}}>
+      <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+        <CssBaseline />
+          {children}
+      </ThemeProvider>
+    </ThemeContext.Provider>
+  )
+}
+
 const queryClient = new QueryClient()
 
 document.addEventListener("turbo:load", () => {
-  const [isDarkTheme, setIsDarkTheme] = useState(false)
+  
   const root = createRoot(
     document.body.appendChild(document.createElement("div"))
   )
 
   root.render(
-    <ThemeContext.Provider value={setIsDarkTheme}>
-      <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
-        <CssBaseline />
-        <QueryClientProvider client={queryClient}>
-          <CookiesProvider>
-            <App />
-          </CookiesProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </ThemeContext.Provider>
+        <ThemeProviders>
+          <QueryClientProvider client={queryClient}>
+            <CookiesProvider>
+              <App />
+            </CookiesProvider>
+          </QueryClientProvider>
+        </ThemeProviders>
   )
 })
