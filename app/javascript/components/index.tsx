@@ -20,9 +20,9 @@ function ThemeProviders ({ children }) {
       </ThemeProvider>
     </ThemeContext.Provider>
   )
-}
+} // constructs a component that provides the theme for the app
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient() // creates a query client object to make http requests 
 
 document.addEventListener("turbo:load", () => {
   

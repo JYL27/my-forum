@@ -14,12 +14,12 @@ function FilterAndSort() {
     } // receives change in text field and sets query variable accordingly
 
     function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
-        setAnchorEl(e.currentTarget) // anchor menu at the clicked target
-    }
+        setAnchorEl(e.currentTarget) 
+    } // anchor menu at the clicked target
 
     function handleClose() {
         setAnchorEl(null)
-    }
+    } 
 
     function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
         setTagFilter({...tagFilter, [e.target.name]: e.target.checked}) 

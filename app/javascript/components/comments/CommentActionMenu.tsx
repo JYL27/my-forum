@@ -65,7 +65,7 @@ function CommentActionMenu(props: commentProps) {
             >
                 <MenuItem onClick={handleOpenDialog}>
                     Delete Comment
-                </MenuItem>
+                </MenuItem> {/* if user chooses to delete the comment, open the confirmation dialog box */}
                 <MenuItem onClick={editComment}>
                     Edit Comment
                 </MenuItem>
@@ -82,7 +82,7 @@ function CommentActionMenu(props: commentProps) {
                 <DialogActions>
                     <Button autoFocus onClick={handleCloseDialog}>No</Button>
                     <Button onClick={deleteComment}>Yes</Button>
-                </DialogActions>
+                </DialogActions> {/* autofocus on No option to prevent accidental deletion of comment */}
             </Dialog>
         </Box>
 

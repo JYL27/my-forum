@@ -26,15 +26,15 @@ const BypassRoute = () => {
 export default (
   <Router>
       <Routes>
+        {/* if user is not logged in, root page redirects to login page. Else, root page redirects to main page*/}
         <Route element={<BypassRoute />}>
-          <Route path="/" element={<Navigate to="/login" />} /> {/* if user is not logged in, root page redirects to login page.
-                                                                    Else, root page redirects to main page*/}
+          <Route path="/" element={<Navigate to="/login" />} /> 
           <Route path="/login" element={<LoginPage />} />
         </Route>
-
+        {/* users may view posts if not logged in, but may not create posts or add comments */}
         <Route path="/posts" element={<Posts />} /> 
-        <Route path="/posts/:id" element={<PostThread />} /> {/* users may view posts if not logged in, 
-                                                                but may not create posts or add comments */}
+        <Route path="/posts/:id" element={<PostThread />} /> 
+        {/* if user is not logged in, trying to access any of the below routes will redirect them to the login page */}
         <Route element={<ProtectedRoute />}>
           <Route path="/new" element={<NewPost />} />
           <Route path="/posts/:id/edit" element={<EditPost />} />

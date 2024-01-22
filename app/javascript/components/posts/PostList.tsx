@@ -9,7 +9,6 @@ function PostList() {
   const { query, tagFilter } = useContext(QueryContext)
   const navigate = useNavigate()
   const [posts, setPosts] = useState([defaultPost]) 
-  // sets default values, -1 for id as placeholder
   
   useEffect(() => {
     const url = "/api/v1/posts"
