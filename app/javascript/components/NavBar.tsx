@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Toolbar, AppBar, IconButton, Tooltip, Typography, Stack, Box } from "@mui/material"
 import PostAddIcon from "@mui/icons-material/PostAdd"
 import LoginIcon from '@mui/icons-material/Login'
@@ -9,11 +9,13 @@ import isLoggedIn from "./helpers/isLoggedIn"
 import getCookie from "./helpers/getCookie"
 import HomeIcon from '@mui/icons-material/Home'
 import { defaultPost } from "../types/types"
+import { ThemeContext } from "."
 
 function NavBar() {
   const navigate = useNavigate()
   const user = getCookie("user") // retrieves username via cookie
-
+  const setIsDarkTheme = useContext(ThemeContext)
+  
   function handleCreate() {
     navigate("/new", {state: defaultPost})
   } // if user chooses to create a new post, navigate to new post page with a default location state

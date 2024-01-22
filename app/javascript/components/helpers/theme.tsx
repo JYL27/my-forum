@@ -7,7 +7,33 @@ declare module "@mui/material/styles/createPalette" {
     }
 }
 
-const theme = createTheme({
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#2b2121',
+    },
+    secondary: {
+      main: 'rgba(245,245,7,0.93)',
+    },
+    background: {
+      default: '#ffffff',
+      paper: '#44a9f3',
+    },
+    error: {
+      main: '#bb2519',
+    },
+  },
+  components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+  },
+})
+
+const darkTheme = createTheme({
     palette: {
       mode: 'dark',
       primary: {
@@ -18,7 +44,7 @@ const theme = createTheme({
       },
       background: {
         default: "#121212",
-        paper: '#112081',
+        paper: '#06124a',
       },
       error: {
         main: '#bb2519',
@@ -33,4 +59,4 @@ const theme = createTheme({
     },
 })
 
-export default theme
+export { lightTheme, darkTheme }

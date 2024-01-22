@@ -47,7 +47,7 @@ function FilterAndSort() {
                 gridTemplateColumns: 'repeat(5, 1fr)',
                 gap: 1,
                 gridTemplateRows: 'auto',
-                gridTemplateAreas: `"filter . search . sort"`
+                gridTemplateAreas: `"filter . search . ."`
             }}>
             <Box sx={{gridArea: "filter"}}>
                 <Button 
@@ -70,14 +70,6 @@ function FilterAndSort() {
                     placeholder="Search for posts"
                     size="small">
                 </TextField>
-            </Box>
-            <Box sx={{gridArea: "sort"}}>
-                <Button 
-                    variant="outlined" 
-                    onClick={() => console.log("not implemented sorry")}
-                >
-                    Sort posts
-                </Button>
             </Box>
         </Box>
     )
