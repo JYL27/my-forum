@@ -1,24 +1,17 @@
-# README
+# CVWO 23/24 Assignment Forum Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is my submission for the CVWO 23/24 Winter Assignment
 
-Things you may want to cover:
+## Setting Up the App
 
-* Ruby version
+1. Click on the Code button and download the .zip file.
+2. Extract the files to the desired location.
+3. Open up the windows terminal in the directory containing the project files.
+4. Run the app by entering this command:
 
-* System dependencies
+```bash
+bin/dev
+```
+5. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+6. You should see a page like this:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
