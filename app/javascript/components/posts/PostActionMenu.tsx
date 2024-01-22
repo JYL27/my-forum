@@ -65,7 +65,7 @@ function PostActionMenu() {
       >
         <MenuItem onClick={handleOpenDialog}>
           Delete Post
-        </MenuItem>
+        </MenuItem> {/* if user chooses to delete post, open confirmation dialog */}
         <MenuItem onClick={handleEdit}>
           Edit Post
         </MenuItem>
@@ -85,7 +85,7 @@ function PostActionMenu() {
         <DialogActions>
           <Button autoFocus onClick={handleCloseDialog}>No</Button>
           <Button onClick={handleDelete}>Yes</Button>
-        </DialogActions>
+        </DialogActions> {/* autofocus on No option to prevent accidental deletion of post */}
       </Dialog>
     </Box>
   )

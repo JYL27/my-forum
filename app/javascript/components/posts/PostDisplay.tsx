@@ -15,8 +15,8 @@ function PostDisplay() {
     navigate("comments/new", 
               {state: 
                 { id: -1, 
-                  commenter: " ", 
-                  body: " ", 
+                  commenter: "", 
+                  body: "", 
                   post_id: post.id, 
                   parent_id: undefined
                 }
@@ -36,36 +36,21 @@ function PostDisplay() {
         }}
         square
         >
-          <Box sx={
-            {
-              margin: 2,
-              width: 24/25
-            }}>
-            <Typography 
-              fontSize={32}
-              fontWeight={8}
-            >
+          <Box sx={{margin: 2, width: 24/25}}>
+            <Typography fontSize={32} fontWeight={8}>
               {post.title}
             </Typography>
-            <Typography 
-              fontSize={14}
-            >
+            <Typography fontSize={14}>
               Post by: {post.poster}
             </Typography>
             <Divider />
-            <Typography 
-              fontSize={20}
-              fontWeight={2}
-            >
+            <Typography fontSize={20} fontWeight={2}>
               {post.body}
             </Typography>
           </Box>
         {user == post.poster && <PostActionMenu />} {/* if user is the poster, render the post action menu */}
       </Paper>
-      <Button 
-        onClick={handleAddComment} 
-        startIcon={<CommentIcon />}
-      >
+      <Button onClick={handleAddComment} startIcon={<CommentIcon />}>
         Add a Comment
       </Button>
     </Container>

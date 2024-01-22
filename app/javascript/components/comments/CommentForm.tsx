@@ -91,18 +91,14 @@ function CommentForm(props: {action: "Add" | "Edit" | "Reply"}) {
                         rows={5}
                         required
                         error={bodyError}/>
-                    <Button
-                        onClick={handleOpenDialog}>
+                    <Button onClick={handleOpenDialog}>
                         {props.action == "Add"
                                     ? "Add Comment"
                                     : props.action == "Edit"
                                     ? "Edit Comment"
                                     : "Reply"} 
                     </Button>
-                    <Dialog
-                        open={open}
-                        onClose={handleCloseDialog}
-                    >
+                    <Dialog open={open} onClose={handleCloseDialog}>
                         <DialogTitle>
                             Are you sure you want to proceed?
                         </DialogTitle>

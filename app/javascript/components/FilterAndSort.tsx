@@ -49,10 +49,7 @@ function FilterAndSort() {
                 gridTemplateRows: 'auto',
                 gridTemplateAreas: `"filter . search . sort"`
             }}>
-            <Box sx={
-                {
-                    gridArea: "filter"
-                }}>
+            <Box sx={{gridArea: "filter"}}>
                 <Button 
                     variant="outlined"  
                     onClick={handleClick}
@@ -67,20 +64,14 @@ function FilterAndSort() {
                     {allCheckboxes}
                 </Menu>
             </Box>
-            <Box sx={
-                {
-                    gridArea: "search"
-                }}>
+            <Box sx={{gridArea: "search"}}>
                 <TextField 
                     onChange={handleChange} 
                     placeholder="Search for posts"
                     size="small">
                 </TextField>
             </Box>
-            <Box sx={
-                {
-                    gridArea: "sort"
-                }}>
+            <Box sx={{gridArea: "sort"}}>
                 <Button 
                     variant="outlined" 
                     onClick={() => console.log("not implemented sorry")}

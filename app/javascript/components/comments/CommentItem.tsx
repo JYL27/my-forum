@@ -14,8 +14,8 @@ function CommentItem(props: commentProps) {
       navigate("comments/new", 
                 {state: 
                   { id: -1, 
-                    commenter: " ", 
-                    body: " ", 
+                    commenter: "", 
+                    body: "", 
                     post_id: props.post_id, 
                     parent_id: props.id
                   }
@@ -35,17 +35,10 @@ function CommentItem(props: commentProps) {
       }}
       variant="outlined"
     >
-      <Box sx={
-        {
-          display: "flex"
-        }}
-      >
+      <Box sx={{display: "flex"}}>
         <Box sx={{width: 475}}>
           <CardContent>
-            
-            <Typography 
-              fontSize={16}
-              fontWeight={3}>
+            <Typography fontSize={16} fontWeight={3}>
                 {props.body}
             </Typography>
           </CardContent>

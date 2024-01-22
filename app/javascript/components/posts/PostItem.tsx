@@ -17,11 +17,7 @@ function PostItem(props: postProps) {
                 }
             }
         >
-            <CardContent sx={
-                {
-                    height: 3/4,
-                    paddingY: 2
-                }}>
+            <CardContent sx={{height: 3/4, paddingY: 2}}>
                 <Typography 
                     noWrap
                     fontWeight={5}
@@ -41,24 +37,22 @@ function PostItem(props: postProps) {
             </CardContent>
             <CardActions sx={
                 {
+                    height: 50,
                     display: 'grid', 
                     gridTemplateColumns: 'repeat(5, 1fr)',
                     gap: 1,
                     gridTemplateRows: 'auto',
                     gridTemplateAreas: `"button . tag . poster"`
                 }}>
-                <Box sx={{gridArea: "button"}}>
+                <Box sx={{gridArea: "button", width: 100}}>
                     <Button size="small" href={`/posts/${props.id}`}>Read Post</Button> {/* displays button 
                                                                                         to direct to post thread*/}
                 </Box>
-                <Box sx={{gridArea: "tag"}}>
+                <Box sx={{gridArea: "tag", width: 100}}>
                     <Chip size="small" label={props.tag}/> {/* displays post tag*/}
                 </Box>
-                <Box sx={{gridArea: "poster"}}>
-                    <Typography 
-                        noWrap
-                        fontSize={12}
-                    >
+                <Box sx={{gridArea: "poster", width: 100}}>
+                    <Typography noWrap fontSize={12}>
                         Posted by: {props.poster}
                     </Typography>
                 </Box>                                                                            

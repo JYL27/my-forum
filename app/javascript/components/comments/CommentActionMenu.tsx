@@ -70,10 +70,7 @@ function CommentActionMenu(props: commentProps) {
                     Edit Comment
                 </MenuItem>
             </Menu>
-            <Dialog
-                open={open}
-                onClose={handleCloseDialog}
-            >
+            <Dialog open={open} onClose={handleCloseDialog}>
                 <DialogTitle>
                     Are you sure you want to delete the comment?
                 </DialogTitle>

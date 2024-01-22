@@ -130,15 +130,11 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                     >
                         {tagMenuItems}
                     </TextField>
-                    <Button
-                        onClick={handleOpenDialog}>
+                    <Button onClick={handleOpenDialog}>
                         {/*displays correct action*/}
                         {props.action} Post
                     </Button>
-                    <Dialog
-                        open={open}
-                        onClose={handleCloseDialog}
-                    >
+                    <Dialog open={open} onClose={handleCloseDialog}>
                         <DialogTitle>
                             Are you sure you want to proceed?
                         </DialogTitle>
@@ -152,8 +148,8 @@ function PostForm(props: {action: "Create" | "Edit"}) {
                             <Button onClick={handleSubmit}>Yes</Button>
                         </DialogActions>
                     </Dialog>
-                    <Button href="/posts">
-                        Back to Posts
+                    <Button href={props.action == "Create" ? "/posts" : `/posts/${state.id}`}>
+                        Back to {props.action == "Create" ? "Posts" : "Post"}
                     </Button>
                 </form>
             </Container>

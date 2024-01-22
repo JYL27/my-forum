@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button, Typography, TextField, Container, Stack, Box } from "@mui/material"
+import { Button, Typography, TextField, Container, Stack } from "@mui/material"
 import { useCookies } from "react-cookie"
 
 function LoginForm() {
@@ -71,14 +71,10 @@ function LoginForm() {
                             paddingLeft: 3
                         }}
                 >
-                    <Button 
-                        type="submit" 
-                    >
+                    <Button type="submit" >
                         Login
                     </Button>
-                    <Button 
-                        onClick={handleNoLogin}
-                    >
+                    <Button onClick={handleNoLogin}>
                         View posts without logging in
                     </Button> {/* users may choose not to log in, after which 
                                 they may view posts but not create or comment on them */}

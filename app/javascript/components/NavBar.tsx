@@ -8,13 +8,14 @@ import removeCookie from "./helpers/removeCookie"
 import isLoggedIn from "./helpers/isLoggedIn"
 import getCookie from "./helpers/getCookie"
 import HomeIcon from '@mui/icons-material/Home'
+import { defaultPost } from "../types/types"
 
 function NavBar() {
   const navigate = useNavigate()
   const user = getCookie("user") // retrieves username via cookie
 
   function handleCreate() {
-    navigate("/new", {state: {id: -1, title: " ", body: " ", tag: "General"}})
+    navigate("/new", {state: defaultPost})
   } // if user chooses to create a new post, navigate to new post page with a default location state
 
   function handleLogin() {
@@ -29,7 +30,7 @@ function NavBar() {
 
   function handleGoHome() {
     navigate("/posts")
-  }
+  } // users may choose go back to the main posts page
 
   return (
     <AppBar position="static">
@@ -50,7 +51,7 @@ function NavBar() {
           <Typography variant="h6">
             Logged in as: {user}
           </Typography>
-        </Box>
+        </Box> {/* displays the user's current username */}
         
         <Stack 
           direction="row"

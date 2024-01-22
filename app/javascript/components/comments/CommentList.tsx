@@ -4,19 +4,9 @@ import { Container, Typography, Box } from "@mui/material"
 import { commentProps } from "../../types/types.tsx"
 import { PostContext } from "../../pages/PostThread.tsx"
 import { useQuery } from "@tanstack/react-query"
+import { defaultComment } from "../../types/types.tsx"
 
-let def: number | undefined
-
-export const CommentContext = createContext(
-    [
-        {   id: -1, 
-            commenter: " ", 
-            body: " ", 
-            post_id: -1,
-            parent_id: def
-        }
-    ]
-)
+export const CommentContext = createContext([defaultComment])
 
 function CommentList() {
     const post = useContext(PostContext) 

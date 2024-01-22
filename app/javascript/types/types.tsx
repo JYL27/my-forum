@@ -39,9 +39,9 @@ type postProps = {
 
 const defaultPost = {
     id: -1,
-    poster: " ",
-    title: " ",
-    body: " ",
+    poster: "",
+    title: "",
+    body: "",
     tag: "General"
 }
 
@@ -58,4 +58,15 @@ type postParams = {
     id: string
 }
 
-export { allTags, allTagsObject, postFormProps, commentFormProps, postProps, commentProps, defaultPost, postParams }
+let def: number | undefined
+
+const defaultComment = {
+    id: -1,
+    commenter: "",
+    body: "",
+    post_id: -1,
+    parent_id: def
+}
+
+export { allTags, allTagsObject, defaultPost, defaultComment, 
+        postFormProps, commentFormProps, postProps, commentProps, postParams }
