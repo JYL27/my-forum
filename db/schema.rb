@@ -30,11 +30,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_18_113524) do
     t.string "poster"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "username"
-  end
-
   add_foreign_key "comments", "posts"
 end
