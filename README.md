@@ -17,7 +17,7 @@ Ensure that you have the following installed on your local machine:
 ```bash
 npm install
 ```
-5. Install yarn dependencies:
+5. Install yarn:
 ```bash
 yarn install
 ```
