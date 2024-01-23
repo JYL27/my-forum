@@ -9,14 +9,12 @@
 #   end
 
 Post.create!([{
-    id: 1,
     poster: "jy",
     title: "Hello World",
     body: "Goodbye World",
     tag: "Technology"
 }, 
 {
-    id: 2,
     poster: "jx",
     title: "This is post number 2",
     body: "This is body number 2",
@@ -28,7 +26,6 @@ Comment.create!([{
     commenter: "jx",
     body: "Here's a sample comment",
     post_id: 1,
-    parent_id: null
 }, 
 {   
     id: 2,
@@ -56,7 +53,6 @@ Comment.create!([{
     commenter: "jy",
     body: "Here's another sample comment",
     post_id: 1,
-    parent_id: null
 }, 
 {   
     id: 6,
