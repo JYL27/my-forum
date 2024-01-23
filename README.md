@@ -31,7 +31,7 @@ rails db:migrate
 ```
 8. Fill the database with initial posts and comments:
 ```bash
-rails db:migrate
+rails db:seed
 ```
 9. Run the app by entering this command:
 ```bash
